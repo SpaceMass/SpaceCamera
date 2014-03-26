@@ -126,4 +126,4 @@ window.mainloop()
 #		tr = ephem.Date(tr + 60.0 * ephem.second)
 #	print
 #	obs.date = tr + ephem.minute
-#this code is dope
+#this code is dope!
