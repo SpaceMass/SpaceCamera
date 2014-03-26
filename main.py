@@ -35,7 +35,6 @@ for line in data:
 	stations_text_file.append(line)
 
 
-
 #Code modified from http://brainwagon.org/2009/09/27/how-to-use-python-to-predict-satellite-locations/
 #We need to extract the two line element for just the iss from http://www.celestrak.com/NORAD/elements/stations.txt
 iss = ephem.readtle(stations_text_file[0],
@@ -127,3 +126,4 @@ window.mainloop()
 #		tr = ephem.Date(tr + 60.0 * ephem.second)
 #	print
 #	obs.date = tr + ephem.minute
+#this code is dope
