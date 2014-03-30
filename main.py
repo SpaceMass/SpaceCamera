@@ -33,7 +33,8 @@ data = urllib2.urlopen("http://www.celestrak.com/NORAD/elements/stations.txt")
 stations_text_file = []
 for line in data:
 	stations_text_file.append(line)
-
+global EOSites_store
+EOSites_store = []
 
 
 #Code modified from http://brainwagon.org/2009/09/27/how-to-use-python-to-predict-satellite-locations/
@@ -77,22 +78,78 @@ def fileread():
 	tree = ET.parse(filename)
 	base = tree.getroot()
 	#displays target locations extracted from XML file
+	Nomenclature_Increment = 0
+	global locations_list
+	locations_list = []
 	for elem in base.findall('EOSites/wmc__TEOSite'):
-		print elem.get('Nomenclature'), elem.text
+		#print elem.get('Nomenclature'), elem.text
 		location_storeage = elem.get('Nomenclature')
 		locations.append(location_storeage)
-	print(locations)
+		locations_list.append(location_storeage)
+	#print(locations)
+	print(locations_list)
 	text_file.configure(text="The Targets are: \n" + "\n".join(locations))
 
 	#displays notes extracted from XML file
+	global GMT
+	GMT = []
+	global Lens
+	Lens = []
+	global weather
+	weather = []
+	global nadir_true_false
+	nadir_true_false = []
+	global track 
+	track = []
+	global data_from_xml
+	data_from_xml = []
 	for elem in base.findall('EOSites/wmc__TEOSite'):
-		 print elem.get('Notes', elem.text)
-		 notes_storeage = elem.get('Notes')
-		 notes.append(notes_storeage)
-	print(notes)
-	notes_file.configure(text="The Notes are: \n" + "\n".join(notes))
-	#text_file.configure(text=testing)
+		weather_string = ''
+		#print elem.get('Notes', elem.text)
+		notes_storeage = elem.get('Notes')
+		notes.append(notes_storeage)
+		GMT_index = notes_storeage.index('GMT')
+		GMT.append(notes_storeage[GMT_index+5]+notes_storeage[GMT_index+6]+notes_storeage[GMT_index+7]+notes_storeage[GMT_index+8]+notes_storeage[GMT_index+9]+notes_storeage[GMT_index+10]+notes_storeage[GMT_index+11]+notes_storeage[GMT_index+12])
+		Lens_index = notes_storeage.index('Lens')
+		Lens.append(notes_storeage[Lens_index+10]+notes_storeage[Lens_index+11]+notes_storeage[Lens_index+12]+notes_storeage[Lens_index+13]+notes_storeage[Lens_index+14]+notes_storeage[Lens_index+15]+notes_storeage[Lens_index+16]+notes_storeage[Lens_index+17])
+		if 'early morning' in notes_storeage:
+			weather_string = weather_string + 'The pass will take place during Early Morning Local Time'
+		if 'mid-morning' in notes_storeage:
+		 	weather_string = weather_string + 'The pass will take place during Mid-morning local time'
+		if 'clear' in notes_storeage:
+		 	weather_string = weather_string + " Cloud conditions are clear"		
+		if 'partly cloudy' in notes_storeage:
+		 	weather_string = weather_string + " Cloud conditions are partly cloudy"
+		weather.append(weather_string)
+		nadir_true_false.append('nadir' in notes_storeage)
+		if 'left of track' in notes_storeage:
+			track.append('left of track')
+		if 'right of track' in notes_storeage:
+			track.append('right of track')
+		if 'Closest approach' in notes_storeage:
+			track_index = notes_storeage.index('Closest')
+			z = 17
+			z_str = ''
+			while (z < (len(notes_storeage)-track_index)):
+				z_str = z_str + notes_storeage[track_index+z]
+				z = z + 1
+			track.append(z_str)
 
+	data_from_xml.append(locations_list)
+	data_from_xml.append(GMT)
+	data_from_xml.append(Lens)
+	data_from_xml.append(weather)
+	data_from_xml.append(nadir_true_false)
+	data_from_xml.append(track)
+	#print(notes)
+	notes_file.configure(text="The Notes are: \n" + "\n".join(notes))
+	print(Lens)
+	print(weather)
+	print(nadir_true_false)
+	print(data_from_xml[0][1])
+
+
+	#text_file.configure(text=testing)
 #Info about buttons http://effbot.org/tkinterbook/button.htm
 #Parsing code from http://stackoverflow.com/questions/773797/updating-tkinter-labels-in-python
 #settings for font, font size, pixel size, of the text in our GUI
