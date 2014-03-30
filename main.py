@@ -50,6 +50,7 @@ iss = ephem.readtle(stations_text_file[0],
 
 #Create a new window 
 window = Tkinter.Tk()
+window.wm_title("SpaceMass")
 #draw the window, and start the 'application'
 
 timetoadd=0
@@ -71,6 +72,12 @@ while timetoadd < 270:
 	#print(timetoadd)
 print(long_list_3_orbits)
 print(lat_list_3_orbits)
+
+def newpage1():
+	win=Toplevel()
+	message = "Second Window"
+	Label(win, text=message).pack()
+	Button(win,text='OK', command=win.destroy).pack()
 
 #Put a text widget in the main program
 # Source: http://ygchan.blogspot.com/2012/05/python-how-to-make-clock-timer-in.html
@@ -166,8 +173,27 @@ def fileread():
 	print(weather)
 	print(nadir_true_false)
 	print(data_from_xml[0][1])
-	text_position1.configure(text=data_from_xml[0][3])
+	
 
+	text_position1 = Button(window, text="", font=("Helvetica", 15), command=newpage1)
+	text_position1.pack(anchor = "w", padx = 50)
+	text_position2 = Tkinter.Label(window, text="", font=("Helvetica", 15))
+	text_position2.pack(anchor = "w", padx = 50)
+	text_position3 = Tkinter.Label(window, text="", font=("Helvetica", 15))
+	text_position3.pack(anchor = "w", padx = 50)
+	text_position4 = Tkinter.Label(window, text="", font=("Helvetica", 15))
+	text_position4.pack(anchor = "w", padx = 50)
+	text_position5 = Tkinter.Label(window, text="", font=("Helvetica", 15))
+	text_position5.pack(anchor = "w", padx = 50)
+	text_position6 = Tkinter.Label(window, text="", font=("Helvetica", 15))
+	text_position6.pack(anchor = "w", padx = 50)
+	
+	text_position1.configure(text=data_from_xml[0][0])
+	text_position2.configure(text=data_from_xml[0][1])
+	text_position3.configure(text=data_from_xml[0][2])
+	text_position4.configure(text=data_from_xml[0][3])
+	text_position5.configure(text=data_from_xml[0][4])
+	text_position6.configure(text=data_from_xml[0][5])
 
 	#text_file.configure(text=testing)
 #Info about buttons http://effbot.org/tkinterbook/button.htm
@@ -178,9 +204,8 @@ iss.compute(timenow)
 currentlong = iss.sublong
 currentlat = iss.sublat
 text_currentposition = Tkinter.Label(window, text="", font=("Helvetica", 15))#clock
-text_currentposition.pack(anchor = "w", padx = 50, pady = 50)#clock
-text_position1 = Tkinter.Label(window, text="", font=("Helvetica", 15))
-text_position1.pack(anchor = "w", padx = 50, pady = 50)
+text_currentposition.pack(anchor = "w", padx = 50)#clock
+
 
 b = Button(window, text="Browse for XML File", command=fileback)
 b.pack()
