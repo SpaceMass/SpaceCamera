@@ -109,7 +109,7 @@ def fileread():
 		locations_list.append(location_storeage)
 	#print(locations)
 	print(locations_list)
-	text_file.configure(text="The Targets are: \n" + "\n".join(locations))
+	
 
 	#displays notes extracted from XML file
 	global GMT
@@ -128,7 +128,6 @@ def fileread():
 		weather_string = ''
 		#print elem.get('Notes', elem.text)
 		notes_storeage = elem.get('Notes')
-		notes.append(notes_storeage)
 		GMT_index = notes_storeage.index('GMT')
 		GMT.append(notes_storeage[GMT_index+5]+notes_storeage[GMT_index+6]+notes_storeage[GMT_index+7]+notes_storeage[GMT_index+8]+notes_storeage[GMT_index+9]+notes_storeage[GMT_index+10]+notes_storeage[GMT_index+11]+notes_storeage[GMT_index+12])
 		Lens_index = notes_storeage.index('Lens')
@@ -163,11 +162,11 @@ def fileread():
 	data_from_xml.append(nadir_true_false)
 	data_from_xml.append(track)
 	#print(notes)
-	notes_file.configure(text="The Notes are: \n" + "\n".join(notes))
 	print(Lens)
 	print(weather)
 	print(nadir_true_false)
 	print(data_from_xml[0][1])
+	text_position1.configure(text=data_from_xml[0][3])
 
 
 	#text_file.configure(text=testing)
@@ -178,12 +177,11 @@ timenow = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 iss.compute(timenow)
 currentlong = iss.sublong
 currentlat = iss.sublat
-text_currentposition = Tkinter.Label(window, text="", font=("Helvetica", 15))
-text_currentposition.pack(anchor = "w", padx = 50, pady = 50)
-text_file = Tkinter.Label(window, text="", font=("Helvetica", 15))
-text_file.pack(anchor = "w", padx = 50, pady = 50)
-notes_file = Tkinter.Label(window, text="", font=("Helvetica", 15))
-notes_file.pack(anchor = "w", padx = 50, pady = 50)
+text_currentposition = Tkinter.Label(window, text="", font=("Helvetica", 15))#clock
+text_currentposition.pack(anchor = "w", padx = 50, pady = 50)#clock
+text_position1 = Tkinter.Label(window, text="", font=("Helvetica", 15))
+text_position1.pack(anchor = "w", padx = 50, pady = 50)
+
 b = Button(window, text="Browse for XML File", command=fileback)
 b.pack()
 
