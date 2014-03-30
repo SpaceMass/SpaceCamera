@@ -51,6 +51,7 @@ iss = ephem.readtle(stations_text_file[0],
 #Create a new window 
 window = Tkinter.Tk()
 window.wm_title("SpaceMass")
+window.geometry("1000x1000")
 #draw the window, and start the 'application'
 
 timetoadd=0
@@ -75,7 +76,32 @@ print(lat_list_3_orbits)
 
 def newpage1():
 	win=Toplevel()
-	message = "Second Window"
+	message = "Target Information"
+	Label(win, text=message).pack()
+	Button(win,text='OK', command=win.destroy).pack()
+def newpage2():
+	win=Toplevel()
+	message = "Target Information"
+	Label(win, text=message).pack()
+	Button(win,text='OK', command=win.destroy).pack()
+def newpage3():
+	win=Toplevel()
+	message = "Target Information"
+	Label(win, text=message).pack()
+	Button(win,text='OK', command=win.destroy).pack()
+def newpage4():
+	win=Toplevel()
+	message = "Target Information"
+	Label(win, text=message).pack()
+	Button(win,text='OK', command=win.destroy).pack()
+def newpage5():
+	win=Toplevel()
+	message = "Target Information"
+	Label(win, text=message).pack()
+	Button(win,text='OK', command=win.destroy).pack()
+def newpage6():
+	win=Toplevel()
+	message = "Target Information"
 	Label(win, text=message).pack()
 	Button(win,text='OK', command=win.destroy).pack()
 
@@ -89,6 +115,7 @@ def positionupdater():
 	currentlat = iss.sublat 
 	text_currentposition.configure(text="The Iss's Current Position is \n" + "Long:" + str(currentlong) + "\n" + "Lat:" + str(currentlat) +"\n")
 	window.after(100, positionupdater)
+	text_clock.configure(text=str(timenow))
 
 #http://effbot.org/pyfaq/how-do-you-set-a-global-variable-in-a-function.htm
 #setting a gloval variable in a function
@@ -173,19 +200,20 @@ def fileread():
 	print(weather)
 	print(nadir_true_false)
 	print(data_from_xml[0][1])
-	
 
+	
+	#creating the buttons for each one of the locations, each button brings up a new page with target info
 	text_position1 = Button(window, text="", font=("Helvetica", 15), command=newpage1)
 	text_position1.pack(anchor = "w", padx = 50)
-	text_position2 = Tkinter.Label(window, text="", font=("Helvetica", 15))
+	text_position2 = Button(window, text="", font=("Helvetica", 15), command=newpage2)
 	text_position2.pack(anchor = "w", padx = 50)
-	text_position3 = Tkinter.Label(window, text="", font=("Helvetica", 15))
+	text_position3 = Button(window, text="", font=("Helvetica", 15), command=newpage3)
 	text_position3.pack(anchor = "w", padx = 50)
-	text_position4 = Tkinter.Label(window, text="", font=("Helvetica", 15))
+	text_position4 = Button(window, text="", font=("Helvetica", 15), command=newpage4)
 	text_position4.pack(anchor = "w", padx = 50)
-	text_position5 = Tkinter.Label(window, text="", font=("Helvetica", 15))
+	text_position5 = Button(window, text="", font=("Helvetica", 15), command=newpage5)
 	text_position5.pack(anchor = "w", padx = 50)
-	text_position6 = Tkinter.Label(window, text="", font=("Helvetica", 15))
+	text_position6 = Button(window, text="", font=("Helvetica", 15), command=newpage6)
 	text_position6.pack(anchor = "w", padx = 50)
 	
 	text_position1.configure(text=data_from_xml[0][0])
@@ -205,7 +233,8 @@ currentlong = iss.sublong
 currentlat = iss.sublat
 text_currentposition = Tkinter.Label(window, text="", font=("Helvetica", 15))#clock
 text_currentposition.pack(anchor = "w", padx = 50)#clock
-
+text_clock = Tkinter.Label(window, text="Clock", font=("Helvetica", 15))
+text_clock.pack(anchor = "w", padx = 50)
 
 b = Button(window, text="Browse for XML File", command=fileback)
 b.pack()
