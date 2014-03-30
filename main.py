@@ -3,6 +3,7 @@
 import sys #gives access to a variety of parameters and functions 
 import math #function for mathematical operations
 import ephem #function that gives locations of astronomical objects
+#importing specific functions for time value 
 import datetime
 import time 
 from time import gmtime, strftime
