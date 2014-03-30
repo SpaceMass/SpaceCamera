@@ -3,8 +3,10 @@
 import sys #gives access to a variety of parameters and functions 
 import math #function for mathematical operations
 import ephem #function that gives locations of astronomical objects
+#importing specific functions for time value 
 import datetime
-from time import gmtime, strftime #importing specific functions for time value 
+import time 
+from time import gmtime, strftime
 import urllib2 #function for opening URLs
 import xml.etree.ElementTree as ET #function to store our XML file data
 try:
@@ -49,6 +51,26 @@ iss = ephem.readtle(stations_text_file[0],
 #Create a new window 
 window = Tkinter.Tk()
 #draw the window, and start the 'application'
+
+timetoadd=0
+timenow = datetime.datetime.utcnow()
+iss.compute(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+global long_list_3_orbits
+long_list_3_orbits = []
+global lat_list_3_orbits
+lat_list_3_orbits = []
+while timetoadd < 270:
+	print(timenow + datetime.timedelta(0,timetoadd*60))
+	print(timenow)
+	iss.compute(timenow + datetime.timedelta(0,timetoadd*60))
+	long_list_3_orbits.append(iss.sublong)
+	lat_list_3_orbits.append(iss.sublat)
+	timetoadd = timetoadd + 1
+	#print(iss.sublong)
+	#print(iss.sublat)
+	#print(timetoadd)
+print(long_list_3_orbits)
+print(lat_list_3_orbits)
 
 #Put a text widget in the main program
 # Source: http://ygchan.blogspot.com/2012/05/python-how-to-make-clock-timer-in.html
