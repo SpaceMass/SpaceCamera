@@ -86,11 +86,17 @@ def newpage1():
 	close.place(x=450,y=650)
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
+
+	text_longlat = Tkinter.Label(win, text="", font=("Helvetica", 15))
+	text_longlat.pack(anchor = "w", padx = 50)
+	text_longlat.place(x=50,y=400)
+	text_longlat.configure(text= "Location of Target: " + data_from_xml[5][0])
 	
 	text_weather = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_weather.pack(anchor = "w", padx = 50)
-	text_weather.place(x=50,y=400)
+	text_weather.place(x=50,y=450)
 	text_weather.configure(text= "Weather Conditions: " + data_from_xml[3][0])
+
 def newpage2():
 	win=Toplevel()
 	message = "Target Information"
@@ -101,10 +107,15 @@ def newpage2():
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
 
+	text_longlat2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
+	text_longlat2.pack(anchor = "w", padx = 50)
+	text_longlat2.place(x=50,y=400)
+	text_longlat2.configure(text= "Location of Target: " + data_from_xml[5][1])
+
 	text_weather2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_weather2.pack(anchor = "w", padx = 50)
-	text_weather2.place(x=50,y=400)
-	text_weather2.configure(text=data_from_xml[3][1])
+	text_weather2.place(x=50,y=450)
+	text_weather2.configure(text="Weather Conditions: " + data_from_xml[3][1])
 def newpage3():
 	win=Toplevel()
 	message = "Target Information"
@@ -115,10 +126,15 @@ def newpage3():
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
 
+	text_longlat3 = Tkinter.Label(win, text="", font=("Helvetica", 15))
+	text_longlat3.pack(anchor = "w", padx = 50)
+	text_longlat3.place(x=50,y=400)
+	text_longlat3.configure(text= "Location of Target: " + data_from_xml[5][2])
+
 	text_weather3 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_weather3.pack(anchor = "w", padx = 50)
-	text_weather3.place(x=50,y=400)
-	text_weather3.configure(text=data_from_xml[3][2])
+	text_weather3.place(x=50,y=450)
+	text_weather3.configure(text="Weather Conditions: " + data_from_xml[3][2])
 
 def newpage4():
 	win=Toplevel()
@@ -127,14 +143,18 @@ def newpage4():
 	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15))
 	close.pack()
 	close.place(x=450,y=650)
-	Button(win,text='OK', command=win.destroy).pack()
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
 
+	text_longlat4 = Tkinter.Label(win, text="", font=("Helvetica", 15))
+	text_longlat4.pack(anchor = "w", padx = 50)
+	text_longlat4.place(x=50,y=400)
+	text_longlat4.configure(text= "Location of Target: " + data_from_xml[5][3])
+
 	text_weather4 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_weather4.pack(anchor = "w", padx = 50)
-	text_weather4.place(x=50,y=400)
-	text_weather4.configure(text=data_from_xml[3][3])
+	text_weather4.place(x=50,y=450)
+	text_weather4.configure(text="Weather Conditions: " + data_from_xml[3][3])
 def newpage5():
 	win=Toplevel()
 	message = "Target Information"
@@ -145,10 +165,15 @@ def newpage5():
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
 
+	text_longlat5 = Tkinter.Label(win, text="", font=("Helvetica", 15))
+	text_longlat5.pack(anchor = "w", padx = 50)
+	text_longlat5.place(x=50,y=400)
+	text_longlat5.configure(text= "Location of Target: " + data_from_xml[5][4])
+
 	text_weather5 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_weather5.pack(anchor = "w", padx = 50)
-	text_weather5.place(x=50,y=400)
-	text_weather5.configure(text=data_from_xml[3][4])
+	text_weather5.place(x=50,y=450)
+	text_weather5.configure(text="Weather Conditions: " + data_from_xml[3][4])
 def newpage6():
 	win=Toplevel()
 	message = "Target Information"
@@ -159,10 +184,15 @@ def newpage6():
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
 
+	text_longlat6 = Tkinter.Label(win, text="", font=("Helvetica", 15))
+	text_longlat6.pack(anchor = "w", padx = 50)
+	text_longlat6.place(x=50,y=400)
+	text_longlat6.configure(text= "Location of Target: " + data_from_xml[5][5])
+
 	text_weather6 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_weather6.pack(anchor = "w", padx = 50)
-	text_weather6.place(x=50,y=400)
-	text_weather6.configure(text=data_from_xml[3][2])
+	text_weather6.place(x=50,y=450)
+	text_weather6.configure(text="Weather Conditions: " + data_from_xml[3][2])
 
 #Put a text widget in the main program
 # Source: http://ygchan.blogspot.com/2012/05/python-how-to-make-clock-timer-in.html
