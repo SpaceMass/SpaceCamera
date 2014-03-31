@@ -52,6 +52,9 @@ iss = ephem.readtle(stations_text_file[0],
 window = Tkinter.Tk()
 window.wm_title("SpaceMass")
 window.geometry("1000x1000")
+window.self= Text(bg='black')
+window.self.pack(fill="both", expand=True)
+
 #draw the window, and start the 'application'
 
 timetoadd=0
@@ -78,44 +81,103 @@ def newpage1():
 	win=Toplevel()
 	message = "Target Information"
 	Label(win, text=message).pack()
-	Button(win,text='OK', command=win.destroy).pack()
+	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15))
+	close.pack()
+	close.place(x=450,y=650)
+	win.wm_title("SpaceMass")
+	win.geometry("1000x1000")
+	
+	text_weather = Tkinter.Label(win, text="", font=("Helvetica", 15))
+	text_weather.pack(anchor = "w", padx = 50)
+	text_weather.place(x=50,y=400)
+	text_weather.configure(text= "Weather Conditions: " + data_from_xml[3][0])
 def newpage2():
 	win=Toplevel()
 	message = "Target Information"
 	Label(win, text=message).pack()
-	Button(win,text='OK', command=win.destroy).pack()
+	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15))
+	close.pack()
+	close.place(x=450,y=650)
+	win.wm_title("SpaceMass")
+	win.geometry("1000x1000")
+
+	text_weather2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
+	text_weather2.pack(anchor = "w", padx = 50)
+	text_weather2.place(x=50,y=400)
+	text_weather2.configure(text=data_from_xml[3][1])
 def newpage3():
 	win=Toplevel()
 	message = "Target Information"
 	Label(win, text=message).pack()
-	Button(win,text='OK', command=win.destroy).pack()
+	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15))
+	close.pack()
+	close.place(x=450,y=650)
+	win.wm_title("SpaceMass")
+	win.geometry("1000x1000")
+
+	text_weather3 = Tkinter.Label(win, text="", font=("Helvetica", 15))
+	text_weather3.pack(anchor = "w", padx = 50)
+	text_weather3.place(x=50,y=400)
+	text_weather3.configure(text=data_from_xml[3][2])
+
 def newpage4():
 	win=Toplevel()
 	message = "Target Information"
 	Label(win, text=message).pack()
+	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15))
+	close.pack()
+	close.place(x=450,y=650)
 	Button(win,text='OK', command=win.destroy).pack()
+	win.wm_title("SpaceMass")
+	win.geometry("1000x1000")
+
+	text_weather4 = Tkinter.Label(win, text="", font=("Helvetica", 15))
+	text_weather4.pack(anchor = "w", padx = 50)
+	text_weather4.place(x=50,y=400)
+	text_weather4.configure(text=data_from_xml[3][3])
 def newpage5():
 	win=Toplevel()
 	message = "Target Information"
 	Label(win, text=message).pack()
-	Button(win,text='OK', command=win.destroy).pack()
+	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15))
+	close.pack()
+	close.place(x=450,y=650)
+	win.wm_title("SpaceMass")
+	win.geometry("1000x1000")
+
+	text_weather5 = Tkinter.Label(win, text="", font=("Helvetica", 15))
+	text_weather5.pack(anchor = "w", padx = 50)
+	text_weather5.place(x=50,y=400)
+	text_weather5.configure(text=data_from_xml[3][4])
 def newpage6():
 	win=Toplevel()
 	message = "Target Information"
 	Label(win, text=message).pack()
-	Button(win,text='OK', command=win.destroy).pack()
+	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15))
+	close.pack()
+	close.place(x=450,y=650)
+	win.wm_title("SpaceMass")
+	win.geometry("1000x1000")
+
+	text_weather6 = Tkinter.Label(win, text="", font=("Helvetica", 15))
+	text_weather6.pack(anchor = "w", padx = 50)
+	text_weather6.place(x=50,y=400)
+	text_weather6.configure(text=data_from_xml[3][2])
 
 #Put a text widget in the main program
 # Source: http://ygchan.blogspot.com/2012/05/python-how-to-make-clock-timer-in.html
 #updating position of ISS based on website information: longitude, latitude, and a text box to hold that information
 def positionupdater():
-	timenow = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+	timenow = strftime("%Y-%m-%d", gmtime())
+	datenow = strftime("%H:%M:%S", gmtime())
+	iss.compute(timenow)
 	iss.compute(timenow)
 	currentlong = iss.sublong 
 	currentlat = iss.sublat 
 	text_currentposition.configure(text="The Iss's Current Position is \n" + "Long:" + str(currentlong) + "\n" + "Lat:" + str(currentlat) +"\n")
+	text_currentposition.place(x=400,y=50)
 	window.after(100, positionupdater)
-	text_clock.configure(text=str(timenow))
+	text_clock.configure(text="Date: " + str(timenow) + "   Time: " + str(datenow))
 
 #http://effbot.org/pyfaq/how-do-you-set-a-global-variable-in-a-function.htm
 #setting a gloval variable in a function
@@ -205,17 +267,27 @@ def fileread():
 	#creating the buttons for each one of the locations, each button brings up a new page with target info
 	text_position1 = Button(window, text="", font=("Helvetica", 15), command=newpage1)
 	text_position1.pack(anchor = "w", padx = 50)
+	text_position1.place(x=50,y=350)
 	text_position2 = Button(window, text="", font=("Helvetica", 15), command=newpage2)
 	text_position2.pack(anchor = "w", padx = 50)
+	text_position2.place(x=50,y=400)
 	text_position3 = Button(window, text="", font=("Helvetica", 15), command=newpage3)
 	text_position3.pack(anchor = "w", padx = 50)
+	text_position3.place(x=50,y=450)
 	text_position4 = Button(window, text="", font=("Helvetica", 15), command=newpage4)
 	text_position4.pack(anchor = "w", padx = 50)
+	text_position4.place(x=50,y=500)
 	text_position5 = Button(window, text="", font=("Helvetica", 15), command=newpage5)
 	text_position5.pack(anchor = "w", padx = 50)
+	text_position5.place(x=50,y=550)
 	text_position6 = Button(window, text="", font=("Helvetica", 15), command=newpage6)
 	text_position6.pack(anchor = "w", padx = 50)
+	text_position6.place(x=50,y=600)
 	
+	text_todaystargets = Tkinter.Label(window, text="Today's Targets", font=("Helvetica", 15), bg='light blue')
+	text_todaystargets.pack(anchor = "w", padx = 50)
+	text_todaystargets.place(x=50,y=300)
+
 	text_position1.configure(text=data_from_xml[0][0])
 	text_position2.configure(text=data_from_xml[0][1])
 	text_position3.configure(text=data_from_xml[0][2])
@@ -233,11 +305,13 @@ currentlong = iss.sublong
 currentlat = iss.sublat
 text_currentposition = Tkinter.Label(window, text="", font=("Helvetica", 15))#clock
 text_currentposition.pack(anchor = "w", padx = 50)#clock
-text_clock = Tkinter.Label(window, text="Clock", font=("Helvetica", 15))
+text_clock = Tkinter.Label(window, text="", font=("Helvetica", 25), bg = 'midnight blue', fg= 'white')
 text_clock.pack(anchor = "w", padx = 50)
+text_clock.place(x=300,y=10)
 
-b = Button(window, text="Browse for XML File", command=fileback)
+b = Button(window, text="Browse for XML File", font=("Helvetica", 15), command=fileback, bg = 'black')
 b.pack()
+b.place(x=425,y=650)
 
 positionupdater()
 window.mainloop()
