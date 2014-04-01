@@ -8,6 +8,8 @@ import datetime
 import time 
 from time import gmtime, strftime
 import urllib2 #function for opening URLs
+import urllib
+import cStringIO
 import xml.etree.ElementTree as ET #function to store our XML file data
 try:
     # for Python2
@@ -17,7 +19,9 @@ except ImportError:
     # for Python3
     import tkinter,tkFileDialog
     from tkinter import *
-
+import PIL
+from PIL import Image
+from PIL import ImageTk
 import csv  #where csv = comma separated values --> format for spreadsheets and databases
 #Code modified from http://stackoverflow.com/questions/1393324/in-python-given-a-url-to-a-text-file-what-is-the-simplest-way-to-read-the-cont
 #More Code from http://www.icrar.org/__data/assets/pdf_file/0008/1436615/challenge09b-notes3.pdf
@@ -317,21 +321,79 @@ def newpage6():
 	text_nadir6.place(x=50,y=525)
 	text_nadir6.configure(text=data_from_xml[4][5])
 
+#Make a global variable that will hold the list of markers we want to put on the map
+#credit to http://hci574.blogspot.com/2010/04/using-google-maps-static-images.html
+global marker_list
+marker_list = []
+
 #Put a text widget in the main program
 # Source: http://ygchan.blogspot.com/2012/05/python-how-to-make-clock-timer-in.html
 #updating position of ISS based on website information: longitude, latitude, and a text box to hold that information
 def positionupdater():
+	marker_list = []
 	timenow = strftime("%Y-%m-%d", gmtime())
 	datenow = strftime("%H:%M:%S", gmtime())
-	iss.compute(timenow)
-	iss.compute(timenow)
+	timenowforcomputing = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+	iss.compute(timenowforcomputing)
 	currentlong = iss.sublong 
 	currentlat = iss.sublat 
+	#update the world map with the current location
+	marker_list.append("markers=size:mid|label:B|color:red|"+str(currentlat)+","+str(currentlong)+"|")
 	text_currentposition.configure(text="The Iss's Current Position is \n" + "Long:" + str(currentlong) + "\n" + "Lat:" + str(currentlat) +"\n")
 	text_currentposition.place(x=400,y=50)
-	window.after(100, positionupdater)
 	text_clock.configure(text="Date: " + str(timenow) + "   Time: " + str(datenow))
+	get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1, imgsize=(500,500), imgformat="jpg", maptype="satellite", markers=marker_list)
+	im = PIL.Image.open("mymap2.jpg")
+	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
+	# pick an image file you have .bmp  .jpg  .gif.  .png
+	# load the file and covert it to a Tkinter image object
+	imageFile = "mymap2.jpg"
+	image1 = ImageTk.PhotoImage(Image.open(imageFile))
+	#image1.configure(file='mymap2.jpg')
+	panel1.configure(image = image1)
+	panel1.image = image1
+	window.after(1000, positionupdater)
 
+def get_static_google_map(filename_wo_extension, center=None, zoom=None, imgsize="500x500", imgformat="jpeg",
+                          maptype="roadmap", markers=None ):  
+    """retrieve a map (image) from the static google maps server 
+    
+     See: http://code.google.com/apis/maps/documentation/staticmaps/
+        
+        Creates a request string with a URL like this:
+        http://maps.google.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=14&size=512x512&maptype=roadmap
+&markers=color:blue|label:S|40.702147,-74.015794&sensor=false"""
+   
+    
+    # assemble the URL
+    request =  "http://maps.google.com/maps/api/staticmap?" # base URL, append query params, separated by &
+   
+    # if center and zoom  are not given, the map will show all marker locations
+    if center != None:
+        request += "center=%s&" % center
+        #request += "center=%s&" % "40.714728, -73.998672"   # latitude and longitude (up to 6-digits)
+        #request += "center=%s&" % "50011" # could also be a zipcode,
+        #request += "center=%s&" % "Brooklyn+Bridge,New+York,NY"  # or a search term 
+    if center != None:
+        request += "zoom=%i&" % zoom  # zoom 0 (all of the world scale ) to 22 (single buildings scale)
+
+
+    request += "size=%ix%i&" % (imgsize)  # tuple of ints, up to 640 by 640
+    request += "format=%s&" % imgformat
+    request += "maptype=%s&" % maptype  # roadmap, satellite, hybrid, terrain
+
+
+    # add markers (location and style)
+    if markers != None:
+        for marker in markers:
+                request += "%s&" % marker
+
+
+    #request += "mobile=false&"  # optional: mobile=true will assume the image is shown on a small screen (mobile device)
+    request += "sensor=false&"   # must be given, deals with getting loction from mobile device 
+    print request
+    
+    urllib.urlretrieve(request, filename_wo_extension+"."+imgformat) # Option 1: save image directly to disk
 #http://effbot.org/pyfaq/how-do-you-set-a-global-variable-in-a-function.htm
 #setting a gloval variable in a function
 def fileback():
@@ -462,6 +524,13 @@ text_clock = Tkinter.Label(window, text="", font=("Helvetica", 25), bg = 'midnig
 text_clock.pack(anchor = "w", padx = 50)
 text_clock.place(x=300,y=10)
 
+
+get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1, imgsize=(500,500), imgformat="jpg", maptype="satellite")
+im = PIL.Image.open("mymap2.jpg")
+imageFile = "mymap2.jpg"
+image1 = ImageTk.PhotoImage(Image.open(imageFile))
+panel1 = Tkinter.Label(window, image=image1)
+panel1.pack(side='top', fill='both', expand='yes')
 b = Button(window, text="Browse for XML File", font=("Helvetica", 15), command=fileback, bg = 'black')
 b.pack()
 b.place(x=425,y=650)
