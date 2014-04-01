@@ -518,7 +518,7 @@ timenow = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 iss.compute(timenow)
 currentlong = iss.sublong
 currentlat = iss.sublat
-text_currentposition = Tkinter.Label(window, text="", font=("Helvetica", 15))#clock
+text_currentposition = Tkinter.Label(window, text="", font=("Helvetica", 15), bg='light blue', fg='midnight blue')#clock
 text_currentposition.pack(anchor = "w", padx = 50)#clock
 text_clock = Tkinter.Label(window, text="", font=("Helvetica", 25), bg = 'midnight blue', fg= 'white')
 text_clock.pack(anchor = "w", padx = 50)
@@ -529,8 +529,9 @@ get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1, imgsize=
 im = PIL.Image.open("mymap2.png")
 imageFile = "mymap2.png"
 image1 = ImageTk.PhotoImage(Image.open(imageFile))
-panel1 = Tkinter.Label(window, image=image1)
+panel1 = Tkinter.Label(window, image=image1, bg='black')
 panel1.pack(side='top', fill='both', expand='yes')
+panel1.place(x=250, y=115)
 b = Button(window, text="Browse for XML File", font=("Helvetica", 15), command=fileback, bg = 'black')
 b.pack()
 b.place(x=425,y=650)
