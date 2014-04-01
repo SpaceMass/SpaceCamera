@@ -342,12 +342,12 @@ def positionupdater():
 	text_currentposition.configure(text="The Iss's Current Position is \n" + "Long:" + str(currentlong) + "\n" + "Lat:" + str(currentlat) +"\n")
 	text_currentposition.place(x=400,y=50)
 	text_clock.configure(text="Date: " + str(timenow) + "   Time: " + str(datenow))
-	get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1, imgsize=(500,500), imgformat="jpg", maptype="satellite", markers=marker_list)
-	im = PIL.Image.open("mymap2.jpg")
+	get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1, imgsize=(500,500), imgformat="png", maptype="satellite", markers=marker_list)
+	im = PIL.Image.open("mymap2.png")
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 	# pick an image file you have .bmp  .jpg  .gif.  .png
 	# load the file and covert it to a Tkinter image object
-	imageFile = "mymap2.jpg"
+	imageFile = "mymap2.png"
 	image1 = ImageTk.PhotoImage(Image.open(imageFile))
 	#image1.configure(file='mymap2.jpg')
 	panel1.configure(image = image1)
@@ -525,9 +525,9 @@ text_clock.pack(anchor = "w", padx = 50)
 text_clock.place(x=300,y=10)
 
 
-get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1, imgsize=(500,500), imgformat="jpg", maptype="satellite")
-im = PIL.Image.open("mymap2.jpg")
-imageFile = "mymap2.jpg"
+get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1, imgsize=(500,500), imgformat="png", maptype="satellite")
+im = PIL.Image.open("mymap2.png")
+imageFile = "mymap2.png"
 image1 = ImageTk.PhotoImage(Image.open(imageFile))
 panel1 = Tkinter.Label(window, image=image1)
 panel1.pack(side='top', fill='both', expand='yes')
