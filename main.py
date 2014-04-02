@@ -94,7 +94,7 @@ def newpage1():
 	close.place(x=450,y=650)
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
-
+#map for first target location 
 	get_static_google_map("image2", center=data_from_xml[6][0]+","+data_from_xml[7][0], zoom=8, imgsize=(500,500), imgformat="png", maptype="satellite")
 	im = PIL.Image.open("image2.png")
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
@@ -109,7 +109,7 @@ def newpage1():
 	imagebox.pack()
 
 
-
+#key information for first target location
 	text_locationname = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname.pack(anchor = "w", padx = 50)
 	text_locationname.place(x=400,y=50)
@@ -157,6 +157,7 @@ def newpage2():
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
 
+#map for first target location 
 	get_static_google_map("image2", center=data_from_xml[6][1]+","+data_from_xml[7][1], zoom=8, imgsize=(500,500), imgformat="png", maptype="satellite")
 	im = PIL.Image.open("image2.png")
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
@@ -170,7 +171,7 @@ def newpage2():
 	imagebox.image = image2
 	imagebox.pack()
 
-
+#key info for second target location
 	text_locationname2 = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname2.pack(anchor = "w", padx = 50)
 	text_locationname2.place(x=400,y=50)
@@ -212,6 +213,7 @@ def newpage3():
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
 
+#map for third target location
 	get_static_google_map("image2", center=data_from_xml[6][2]+","+data_from_xml[7][2], zoom=8, imgsize=(500,500), imgformat="png", maptype="satellite")
 	im = PIL.Image.open("image2.png")
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
@@ -225,7 +227,7 @@ def newpage3():
 	imagebox.image = image2
 	imagebox.pack()
 
-
+#key info for third target location
 	text_locationname3 = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname3.pack(anchor = "w", padx = 50)
 	text_locationname3.place(x=400,y=50)
@@ -267,6 +269,7 @@ def newpage4():
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
 
+#map for fourth target location
 	get_static_google_map("image2", center=data_from_xml[6][3]+","+data_from_xml[7][3], zoom=8, imgsize=(500,500), imgformat="png", maptype="satellite")
 	im = PIL.Image.open("image2.png")
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
@@ -280,7 +283,7 @@ def newpage4():
 	imagebox.image = image2
 	imagebox.pack()
 
-
+#key info for fourth target location
 	text_locationname4 = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname4.pack(anchor = "w", padx = 50)
 	text_locationname4.place(x=400,y=50)
@@ -322,6 +325,7 @@ def newpage5():
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
 
+#map for fifth target location 
 	get_static_google_map("image2", center=data_from_xml[6][4]+","+data_from_xml[7][4], zoom=8, imgsize=(500,500), imgformat="png", maptype="satellite")
 	im = PIL.Image.open("image2.png")
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
@@ -335,7 +339,7 @@ def newpage5():
 	imagebox.image = image2
 	imagebox.pack()
 
-
+#key info for fifth target location
 	text_locationname5 = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname5.pack(anchor = "w", padx = 50)
 	text_locationname5.place(x=400,y=50)
@@ -377,6 +381,7 @@ def newpage6():
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
 
+#map for sixth target location 
 	get_static_google_map("image2", center=data_from_xml[6][5]+","+data_from_xml[7][5], zoom=8, imgsize=(500,500), imgformat="png", maptype="satellite")
 	im = PIL.Image.open("image2.png")
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
@@ -390,7 +395,7 @@ def newpage6():
 	imagebox.image = image2
 	imagebox.pack()
 
-
+#key info for sixth target location
 	text_locationname6 = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname6.pack(anchor = "w", padx = 50)
 	text_locationname6.place(x=400,y=50)
@@ -451,6 +456,8 @@ def positionupdater():
 	text_clock.configure(text="Date: " + str(timenow) + "   Time: " + str(datenow))
 	#TODO split the clock thread and the map thread. We need to slow down the clock to get the google API to work, but now the clock counts slow
 	window.after(1000, positionupdater)
+
+#updating map based on ISS location
 def mapupdater():
 		marker_list = []
 		timenowforcomputing = strftime("%Y-%m-%d %H:%M:%S", gmtime())
@@ -487,7 +494,7 @@ def mapupdater():
 
 
 
-
+#background code for map
 def get_static_google_map(filename_wo_extension, center=None, zoom=None, imgsize="500x500", imgformat="jpeg",
                           maptype="roadmap", markers=None ):  
     """retrieve a map (image) from the static google maps server 
@@ -529,7 +536,8 @@ def get_static_google_map(filename_wo_extension, center=None, zoom=None, imgsize
     
     urllib.urlretrieve(request, filename_wo_extension+"."+imgformat) # Option 1: save image directly to disk
 #http://effbot.org/pyfaq/how-do-you-set-a-global-variable-in-a-function.htm
-#setting a gloval variable in a function
+
+#setting a global variable in a function
 def fileback():
 	global filename
 	from tkFileDialog import askopenfilename  
@@ -619,7 +627,6 @@ def fileread():
 		print(long_storage)
 
 
-
 	data_from_xml.append(locations_list)
 	data_from_xml.append(GMT)
 	data_from_xml.append(Lens)
@@ -682,7 +689,7 @@ text_clock = Tkinter.Label(window, text="", font=("Helvetica", 25), bg = 'midnig
 text_clock.pack(anchor = "w", padx = 50)
 text_clock.place(x=300,y=10)
 
-
+#places map into GUI
 get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1, imgsize=(500,500), imgformat="png", maptype="satellite")
 im = PIL.Image.open("mymap2.png")
 imageFile = "mymap2.png"
