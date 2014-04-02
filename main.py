@@ -84,6 +84,7 @@ while timetoadd < 270:
 #print(long_list_3_orbits)
 #print(lat_list_3_orbits)
 
+#create a target information window for first location
 def newpage1():
 	win=Toplevel()
 	message = "Target Information"
@@ -108,6 +109,7 @@ def newpage1():
 	imagebox.pack()
 
 
+
 	text_locationname = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname.pack(anchor = "w", padx = 50)
 	text_locationname.place(x=400,y=50)
@@ -115,27 +117,27 @@ def newpage1():
 
 	text_passingtime = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_passingtime.pack(anchor = "w", padx = 50)
-	text_passingtime.place(x=50,y=400)
+	text_passingtime.place(x=50,y=500)
 	text_passingtime.configure(text= "Time of Next Pass: " + data_from_xml[1][0])
 
 	text_longlat = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_longlat.pack(anchor = "w", padx = 50)
-	text_longlat.place(x=50,y=425)
+	text_longlat.place(x=50,y=525)
 	text_longlat.configure(text= "Location of Target: " + data_from_xml[5][0])
 	
 	text_weather = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_weather.pack(anchor = "w", padx = 50)
-	text_weather.place(x=50,y=450)
+	text_weather.place(x=50,y=550)
 	text_weather.configure(text= "Weather Conditions: " + data_from_xml[3][0])
 
 	text_lenstype = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_lenstype.pack(anchor = "w", padx = 50)
-	text_lenstype.place(x=50,y=500)
+	text_lenstype.place(x=50,y=600)
 	text_lenstype.configure(text= "Lens Type: " + data_from_xml[2][0])
 
 	text_nadir = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_nadir.pack(anchor = "w", padx = 50)
-	text_nadir.place(x=50,y=525)
+	text_nadir.place(x=50,y=625)
 	text_nadir.configure(text=data_from_xml[4][0])
 
 	
@@ -144,7 +146,7 @@ def newpage1():
 
 	#image1.configure(file='mymap2.jpg')
 
-
+#create a target information window for second location
 def newpage2():
 	win=Toplevel()
 	message = "Target Information"
@@ -176,29 +178,30 @@ def newpage2():
 
 	text_passingtime2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_passingtime2.pack(anchor = "w", padx = 50)
-	text_passingtime2.place(x=50,y=400)
+	text_passingtime2.place(x=50,y=500)
 	text_passingtime2.configure(text= "Time of Next Pass: " + data_from_xml[1][1])
 
 	text_longlat2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_longlat2.pack(anchor = "w", padx = 50)
-	text_longlat2.place(x=50,y=425)
+	text_longlat2.place(x=50,y=525)
 	text_longlat2.configure(text= "Location of Target: " + data_from_xml[5][1])
 
 	text_weather2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_weather2.pack(anchor = "w", padx = 50)
-	text_weather2.place(x=50,y=450)
+	text_weather2.place(x=50,y=550)
 	text_weather2.configure(text="Weather Conditions: " + data_from_xml[3][1])
 
 	text_lenstype2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_lenstype2.pack(anchor = "w", padx = 50)
-	text_lenstype2.place(x=50,y=500)
+	text_lenstype2.place(x=50,y=600)
 	text_lenstype2.configure(text= "Lens Type: " + data_from_xml[2][1])
 
 	text_nadir2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_nadir2.pack(anchor = "w", padx = 50)
-	text_nadir2.place(x=50,y=525)
+	text_nadir2.place(x=50,y=625)
 	text_nadir2.configure(text=data_from_xml[4][1])
 
+#create a target information window for third location
 def newpage3():
 	win=Toplevel()
 	message = "Target Information"
@@ -230,29 +233,30 @@ def newpage3():
 
 	text_passingtime3 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_passingtime3.pack(anchor = "w", padx = 50)
-	text_passingtime3.place(x=50,y=400)
+	text_passingtime3.place(x=50,y=500)
 	text_passingtime3.configure(text= "Time of Next Pass: " + data_from_xml[1][2])
 
 	text_longlat3 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_longlat3.pack(anchor = "w", padx = 50)
-	text_longlat3.place(x=50,y=425)
+	text_longlat3.place(x=50,y=525)
 	text_longlat3.configure(text= "Location of Target: " + data_from_xml[5][2])
 
 	text_weather3 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_weather3.pack(anchor = "w", padx = 50)
-	text_weather3.place(x=50,y=450)
+	text_weather3.place(x=50,y=550)
 	text_weather3.configure(text="Weather Conditions: " + data_from_xml[3][2])
 
 	text_lenstype3 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_lenstype3.pack(anchor = "w", padx = 50)
-	text_lenstype3.place(x=50,y=500)
+	text_lenstype3.place(x=50,y=600)
 	text_lenstype3.configure(text= "Lens Type: " + data_from_xml[2][2])
 
 	text_nadir3 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_nadir3.pack(anchor = "w", padx = 50)
-	text_nadir3.place(x=50,y=525)
+	text_nadir3.place(x=50,y=625)
 	text_nadir3.configure(text=data_from_xml[4][2])
 
+#create a target information window for fourth location
 def newpage4():
 	win=Toplevel()
 	message = "Target Information"
@@ -284,29 +288,30 @@ def newpage4():
 
 	text_passingtime4 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_passingtime4.pack(anchor = "w", padx = 50)
-	text_passingtime4.place(x=50,y=400)
+	text_passingtime4.place(x=50,y=500)
 	text_passingtime4.configure(text= "Time of Next Pass: " + data_from_xml[1][3])
 
 	text_longlat4 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_longlat4.pack(anchor = "w", padx = 50)
-	text_longlat4.place(x=50,y=425)
+	text_longlat4.place(x=50,y=525)
 	text_longlat4.configure(text= "Location of Target: " + data_from_xml[5][3])
 
 	text_weather4 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_weather4.pack(anchor = "w", padx = 50)
-	text_weather4.place(x=50,y=450)
+	text_weather4.place(x=50,y=550)
 	text_weather4.configure(text="Weather Conditions: " + data_from_xml[3][3])
 
 	text_lenstype4 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_lenstype4.pack(anchor = "w", padx = 50)
-	text_lenstype4.place(x=50,y=500)
+	text_lenstype4.place(x=50,y=600)
 	text_lenstype4.configure(text= "Lens Type: " + data_from_xml[2][3])
 
 	text_nadir4 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_nadir4.pack(anchor = "w", padx = 50)
-	text_nadir4.place(x=50,y=525)
+	text_nadir4.place(x=50,y=625)
 	text_nadir4.configure(text=data_from_xml[4][3])
 
+#create a target information window for fifth location
 def newpage5():
 	win=Toplevel()
 	message = "Target Information"
@@ -338,29 +343,30 @@ def newpage5():
 
 	text_passingtime5 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_passingtime5.pack(anchor = "w", padx = 50)
-	text_passingtime5.place(x=50,y=400)
+	text_passingtime5.place(x=50,y=500)
 	text_passingtime5.configure(text= "Time of Next Pass: " + data_from_xml[1][4])
 
 	text_longlat5 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_longlat5.pack(anchor = "w", padx = 50)
-	text_longlat5.place(x=50,y=425)
+	text_longlat5.place(x=50,y=525)
 	text_longlat5.configure(text= "Location of Target: " + data_from_xml[5][4])
 
 	text_weather5 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_weather5.pack(anchor = "w", padx = 50)
-	text_weather5.place(x=50,y=450)
+	text_weather5.place(x=50,y=550)
 	text_weather5.configure(text="Weather Conditions: " + data_from_xml[3][4])
 
 	text_lenstype5 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_lenstype5.pack(anchor = "w", padx = 50)
-	text_lenstype5.place(x=50,y=500)
+	text_lenstype5.place(x=50,y=600)
 	text_lenstype5.configure(text= "Lens Type: " + data_from_xml[2][4])
 
 	text_nadir5 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_nadir5.pack(anchor = "w", padx = 50)
-	text_nadir5.place(x=50,y=525)
+	text_nadir5.place(x=50,y=625)
 	text_nadir5.configure(text=data_from_xml[4][4])
 
+#create a target information window for sixth location
 def newpage6():
 	win=Toplevel()
 	message = "Target Information"
@@ -392,27 +398,27 @@ def newpage6():
 
 	text_passingtime6 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_passingtime6.pack(anchor = "w", padx = 50)
-	text_passingtime6.place(x=50,y=400)
+	text_passingtime6.place(x=50,y=500)
 	text_passingtime6.configure(text= "Time of Next Pass: " + data_from_xml[1][5])
 
 	text_longlat6 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_longlat6.pack(anchor = "w", padx = 50)
-	text_longlat6.place(x=50,y=425)
+	text_longlat6.place(x=50,y=525)
 	text_longlat6.configure(text= "Location of Target: " + data_from_xml[5][5])
 
 	text_weather6 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_weather6.pack(anchor = "w", padx = 50)
-	text_weather6.place(x=50,y=450)
+	text_weather6.place(x=50,y=550)
 	text_weather6.configure(text="Weather Conditions: " + data_from_xml[3][2])
 
 	text_lenstype6 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_lenstype6.pack(anchor = "w", padx = 50)
-	text_lenstype6.place(x=50,y=500)
+	text_lenstype6.place(x=50,y=600)
 	text_lenstype6.configure(text= "Lens Type: " + data_from_xml[2][5])
 
 	text_nadir6 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_nadir6.pack(anchor = "w", padx = 50)
-	text_nadir6.place(x=50,y=525)
+	text_nadir6.place(x=50,y=625)
 	text_nadir6.configure(text=data_from_xml[4][5])
 
 #Make a global variable that will hold the list of markers we want to put on the map
