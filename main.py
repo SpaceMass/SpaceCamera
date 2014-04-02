@@ -352,7 +352,7 @@ def positionupdater():
 	#image1.configure(file='mymap2.jpg')
 	panel1.configure(image = image1)
 	panel1.image = image1
-	window.after(1000, positionupdater)
+	window.after(5000, positionupdater)
 
 def get_static_google_map(filename_wo_extension, center=None, zoom=None, imgsize="500x500", imgformat="jpeg",
                           maptype="roadmap", markers=None ):  
@@ -536,6 +536,9 @@ b = Button(window, text="Browse for XML File", font=("Helvetica", 15), command=f
 b.pack()
 b.place(x=425,y=650)
 
+closebutton=Button(window,text="Close Window", command=window.destroy)
+closebutton.pack()
+closebutton.place(x=600, y=650)
 positionupdater()
 window.mainloop()
 
