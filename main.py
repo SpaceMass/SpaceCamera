@@ -41,7 +41,10 @@ for line in data:
 	stations_text_file.append(line)
 global EOSites_store
 EOSites_store = []
-
+global currentlongfloat
+currentlongfloat = 0.001
+global currentlatfloat
+currentlatfloat = 0.001
 #Code modified from http://brainwagon.org/2009/09/27/how-to-use-python-to-predict-satellite-locations/
 #We need to extract the two line element for just the iss from http://www.celestrak.com/NORAD/elements/stations.txt
 iss = ephem.readtle(stations_text_file[0],
@@ -69,8 +72,8 @@ long_list_3_orbits = []
 global lat_list_3_orbits
 lat_list_3_orbits = []
 while timetoadd < 270:
-	print(timenow + datetime.timedelta(0,timetoadd*60))
-	print(timenow)
+	#print(timenow + datetime.timedelta(0,timetoadd*60))
+	#print(timenow)
 	iss.compute(timenow + datetime.timedelta(0,timetoadd*60))
 	long_list_3_orbits.append(iss.sublong)
 	lat_list_3_orbits.append(iss.sublat)
@@ -78,8 +81,8 @@ while timetoadd < 270:
 	#print(iss.sublong)
 	#print(iss.sublat)
 	#print(timetoadd)
-print(long_list_3_orbits)
-print(lat_list_3_orbits)
+#print(long_list_3_orbits)
+#print(lat_list_3_orbits)
 
 def newpage1():
 	win=Toplevel()
@@ -90,6 +93,20 @@ def newpage1():
 	close.place(x=450,y=650)
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
+
+	get_static_google_map("image2", center=data_from_xml[6][0]+","+data_from_xml[7][0], zoom=8, imgsize=(500,500), imgformat="png", maptype="satellite")
+	im = PIL.Image.open("image2.png")
+	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
+	# pick an image file you have .bmp  .jpg  .gif.  .png
+	# load the file and covert it to a Tkinter image object
+	imageFile = "image2.png"
+	image2 = ImageTk.PhotoImage(Image.open(imageFile))
+
+
+	imagebox = Tkinter.Label(win, image=image2)
+	imagebox.image = image2
+	imagebox.pack()
+
 
 	text_locationname = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname.pack(anchor = "w", padx = 50)
@@ -121,6 +138,13 @@ def newpage1():
 	text_nadir.place(x=50,y=525)
 	text_nadir.configure(text=data_from_xml[4][0])
 
+	
+
+
+
+	#image1.configure(file='mymap2.jpg')
+
+
 def newpage2():
 	win=Toplevel()
 	message = "Target Information"
@@ -130,6 +154,20 @@ def newpage2():
 	close.place(x=450,y=650)
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
+
+	get_static_google_map("image2", center=data_from_xml[6][1]+","+data_from_xml[7][1], zoom=8, imgsize=(500,500), imgformat="png", maptype="satellite")
+	im = PIL.Image.open("image2.png")
+	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
+	# pick an image file you have .bmp  .jpg  .gif.  .png
+	# load the file and covert it to a Tkinter image object
+	imageFile = "image2.png"
+	image2 = ImageTk.PhotoImage(Image.open(imageFile))
+
+
+	imagebox = Tkinter.Label(win, image=image2)
+	imagebox.image = image2
+	imagebox.pack()
+
 
 	text_locationname2 = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname2.pack(anchor = "w", padx = 50)
@@ -171,6 +209,20 @@ def newpage3():
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
 
+	get_static_google_map("image2", center=data_from_xml[6][2]+","+data_from_xml[7][2], zoom=8, imgsize=(500,500), imgformat="png", maptype="satellite")
+	im = PIL.Image.open("image2.png")
+	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
+	# pick an image file you have .bmp  .jpg  .gif.  .png
+	# load the file and covert it to a Tkinter image object
+	imageFile = "image2.png"
+	image2 = ImageTk.PhotoImage(Image.open(imageFile))
+
+
+	imagebox = Tkinter.Label(win, image=image2)
+	imagebox.image = image2
+	imagebox.pack()
+
+
 	text_locationname3 = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname3.pack(anchor = "w", padx = 50)
 	text_locationname3.place(x=400,y=50)
@@ -210,6 +262,20 @@ def newpage4():
 	close.place(x=450,y=650)
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
+
+	get_static_google_map("image2", center=data_from_xml[6][3]+","+data_from_xml[7][3], zoom=8, imgsize=(500,500), imgformat="png", maptype="satellite")
+	im = PIL.Image.open("image2.png")
+	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
+	# pick an image file you have .bmp  .jpg  .gif.  .png
+	# load the file and covert it to a Tkinter image object
+	imageFile = "image2.png"
+	image2 = ImageTk.PhotoImage(Image.open(imageFile))
+
+
+	imagebox = Tkinter.Label(win, image=image2)
+	imagebox.image = image2
+	imagebox.pack()
+
 
 	text_locationname4 = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname4.pack(anchor = "w", padx = 50)
@@ -251,6 +317,20 @@ def newpage5():
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
 
+	get_static_google_map("image2", center=data_from_xml[6][4]+","+data_from_xml[7][4], zoom=8, imgsize=(500,500), imgformat="png", maptype="satellite")
+	im = PIL.Image.open("image2.png")
+	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
+	# pick an image file you have .bmp  .jpg  .gif.  .png
+	# load the file and covert it to a Tkinter image object
+	imageFile = "image2.png"
+	image2 = ImageTk.PhotoImage(Image.open(imageFile))
+
+
+	imagebox = Tkinter.Label(win, image=image2)
+	imagebox.image = image2
+	imagebox.pack()
+
+
 	text_locationname5 = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname5.pack(anchor = "w", padx = 50)
 	text_locationname5.place(x=400,y=50)
@@ -291,6 +371,20 @@ def newpage6():
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
 
+	get_static_google_map("image2", center=data_from_xml[6][5]+","+data_from_xml[7][5], zoom=8, imgsize=(500,500), imgformat="png", maptype="satellite")
+	im = PIL.Image.open("image2.png")
+	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
+	# pick an image file you have .bmp  .jpg  .gif.  .png
+	# load the file and covert it to a Tkinter image object
+	imageFile = "image2.png"
+	image2 = ImageTk.PhotoImage(Image.open(imageFile))
+
+
+	imagebox = Tkinter.Label(win, image=image2)
+	imagebox.image = image2
+	imagebox.pack()
+
+
 	text_locationname6 = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname6.pack(anchor = "w", padx = 50)
 	text_locationname6.place(x=400,y=50)
@@ -330,29 +424,63 @@ marker_list = []
 # Source: http://ygchan.blogspot.com/2012/05/python-how-to-make-clock-timer-in.html
 #updating position of ISS based on website information: longitude, latitude, and a text box to hold that information
 def positionupdater():
-	marker_list = []
 	timenow = strftime("%Y-%m-%d", gmtime())
 	datenow = strftime("%H:%M:%S", gmtime())
 	timenowforcomputing = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 	iss.compute(timenowforcomputing)
 	currentlong = iss.sublong 
 	currentlat = iss.sublat 
+	#google maps only takes degrees, however Pyemphem can gives out Astronamical formate or radians. Let's get the radians. 
+	currentlongfloat= float(iss.sublong)
+	currentlatfloat= float(iss.sublat)
+	#convert radians to degrees with the equations 1 radian = 57.2957795 degrees
+	#TODO Learn how to use pi in python 
+	currentlongfloat = currentlongfloat*57.2957795
+	currentlatfloat= currentlatfloat*57.2957795
+	#print(currentlongfloat)
+	#print(currentlatfloat)
 	#update the world map with the current location
-	marker_list.append("markers=size:mid|label:B|color:red|"+str(currentlat)+","+str(currentlong)+"|")
 	text_currentposition.configure(text="The Iss's Current Position is \n" + "Long:" + str(currentlong) + "\n" + "Lat:" + str(currentlat) +"\n")
 	text_currentposition.place(x=400,y=50)
 	text_clock.configure(text="Date: " + str(timenow) + "   Time: " + str(datenow))
-	get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1, imgsize=(500,500), imgformat="png", maptype="satellite", markers=marker_list)
-	im = PIL.Image.open("mymap2.png")
-	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
-	# pick an image file you have .bmp  .jpg  .gif.  .png
-	# load the file and covert it to a Tkinter image object
-	imageFile = "mymap2.png"
-	image1 = ImageTk.PhotoImage(Image.open(imageFile))
-	#image1.configure(file='mymap2.jpg')
-	panel1.configure(image = image1)
-	panel1.image = image1
-	window.after(5000, positionupdater)
+	#TODO split the clock thread and the map thread. We need to slow down the clock to get the google API to work, but now the clock counts slow
+	window.after(1000, positionupdater)
+def mapupdater():
+		marker_list = []
+		timenowforcomputing = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+		iss.compute(timenowforcomputing)
+		currentlong = iss.sublong 
+		currentlat = iss.sublat 
+		currentlongfloat= float(iss.sublong)
+		currentlatfloat= float(iss.sublat)
+		#convert radians to degrees with the equations 1 radian = 57.2957795 degrees
+		#TODO Learn how to use pi in python 
+		currentlongfloat = currentlongfloat*57.2957795
+		currentlatfloat= currentlatfloat*57.2957795
+		print(currentlongfloat)
+		print(currentlatfloat)
+		marker_list.append("markers=size:mid|label:S|color:red|"+str(currentlatfloat)+","+str(currentlongfloat)+"|")
+		get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1, imgsize=(500,500), imgformat="png", maptype="satellite", markers=marker_list)
+		im = PIL.Image.open("mymap2.png")
+		# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
+		# pick an image file you have .bmp  .jpg  .gif.  .png
+		# load the file and covert it to a Tkinter image object
+		imageFile = "mymap2.png"
+		image1 = ImageTk.PhotoImage(Image.open(imageFile))
+		#image1.configure(file='mymap2.jpg')
+		panel1.configure(image = image1)
+		panel1.image = image1
+		#updata map after 30 seconds
+		window.after(30000, positionupdater)
+
+
+
+
+
+
+
+
+
 
 def get_static_google_map(filename_wo_extension, center=None, zoom=None, imgsize="500x500", imgformat="jpeg",
                           maptype="roadmap", markers=None ):  
@@ -391,7 +519,7 @@ def get_static_google_map(filename_wo_extension, center=None, zoom=None, imgsize
 
     #request += "mobile=false&"  # optional: mobile=true will assume the image is shown on a small screen (mobile device)
     request += "sensor=false&"   # must be given, deals with getting loction from mobile device 
-    print request
+    #print request
     
     urllib.urlretrieve(request, filename_wo_extension+"."+imgformat) # Option 1: save image directly to disk
 #http://effbot.org/pyfaq/how-do-you-set-a-global-variable-in-a-function.htm
@@ -419,7 +547,7 @@ def fileread():
 		locations.append(location_storeage)
 		locations_list.append(location_storeage)
 	#print(locations)
-	print(locations_list)
+	#print(locations_list)
 	
 
 	#displays notes extracted from XML file
@@ -433,14 +561,20 @@ def fileread():
 	nadir_true_false = []
 	global track 
 	track = []
+	global targetlat
+	targetlat = []
+	global targetlong
+	targetlong = []
 	global data_from_xml
 	data_from_xml = []
 	for elem in base.findall('EOSites/wmc__TEOSite'):
 		weather_string = ''
 		#print elem.get('Notes', elem.text)
 		notes_storeage = elem.get('Notes')
+		#Find the location of the GMT information to split the string at that location
 		GMT_index = notes_storeage.index('GMT')
 		GMT.append(notes_storeage[GMT_index+5]+notes_storeage[GMT_index+6]+notes_storeage[GMT_index+7]+notes_storeage[GMT_index+8]+notes_storeage[GMT_index+9]+notes_storeage[GMT_index+10]+notes_storeage[GMT_index+11]+notes_storeage[GMT_index+12])
+		#Find the location of the lens information to split the string at that location
 		Lens_index = notes_storeage.index('Lens')
 		Lens.append(notes_storeage[Lens_index+10]+notes_storeage[Lens_index+11]+notes_storeage[Lens_index+12]+notes_storeage[Lens_index+13]+notes_storeage[Lens_index+14]+notes_storeage[Lens_index+15]+notes_storeage[Lens_index+16]+notes_storeage[Lens_index+17])
 		if 'early morning' in notes_storeage:
@@ -465,6 +599,20 @@ def fileread():
 				z_str = z_str + notes_storeage[track_index+z]
 				z = z + 1
 			track.append(z_str)
+	for elem in base.findall('EOSites/wmc__TEOSite/TGeoCoordsEx'):
+		lat_storage=elem.get('lat')
+		#I have the data, but it is in radians, convert to degrees for google
+		#convert radians to degrees with the equations 1 radian = 57.2957795 degrees
+		lat_storage= str(float(lat_storage)*57.2957795)
+		targetlat.append(lat_storage)
+		long_storage=elem.get('lon')
+		long_storage= str(float(long_storage)*57.2957795)
+
+		targetlong.append(long_storage)
+		print(lat_storage)
+		print(long_storage)
+
+
 
 	data_from_xml.append(locations_list)
 	data_from_xml.append(GMT)
@@ -472,11 +620,15 @@ def fileread():
 	data_from_xml.append(weather)
 	data_from_xml.append(nadir_true_false)
 	data_from_xml.append(track)
+	data_from_xml.append(targetlat)
+	data_from_xml.append(targetlong)
 	#print(notes)
-	print(Lens)
-	print(weather)
-	print(nadir_true_false)
-	print(data_from_xml[0][1])
+	#print(Lens)
+	#print(weather)
+	#print(nadir_true_false)
+	print(targetlong)
+	print(targetlat)
+	#print(data_from_xml[0][1])
 
 	
 	#creating the buttons for each one of the locations, each button brings up a new page with target info
@@ -536,10 +688,8 @@ b = Button(window, text="Browse for XML File", font=("Helvetica", 15), command=f
 b.pack()
 b.place(x=425,y=650)
 
-closebutton=Button(window,text="Close Window", command=window.destroy)
-closebutton.pack()
-closebutton.place(x=600, y=650)
 positionupdater()
+mapupdater()
 window.mainloop()
 
 #TO RUN THE CODE AND SEE GUI, PLEASE SAVE AND THEN GO TO TOOLS --> BUILD
