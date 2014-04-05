@@ -27,8 +27,13 @@ import csv  #where csv = comma separated values --> format for spreadsheets and 
 #More Code from http://www.icrar.org/__data/assets/pdf_file/0008/1436615/challenge09b-notes3.pdf
 #We need to read the Two-line element set from http://www.celestrak.com/NORAD/elements/stations.txt
 #below we are defining our global variables for our code
+import StringIO
+import cStringIO, base64
+
 global filename 
-filename = '' 
+filename = ''
+#Import base64 for converting gif into binary  
+import base64
 global testing
 testing = ''
 global locations
@@ -95,17 +100,19 @@ def newpage1():
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
 #map for first target location 
-	get_static_google_map("image2", center=data_from_xml[6][0]+","+data_from_xml[7][0], zoom=8, imgsize=(500,500), imgformat="png", maptype="satellite")
-	im = PIL.Image.open("image2.png")
+	toopen = get_static_google_map("image2", center=data_from_xml[6][0]+","+data_from_xml[7][0], zoom=8, imgsize=(500,500), imgformat="gif", maptype="satellite")
+	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 	# pick an image file you have .bmp  .jpg  .gif.  .png
 	# load the file and covert it to a Tkinter image object
-	imageFile = "image2.png"
-	image2 = ImageTk.PhotoImage(Image.open(imageFile))
+	u = urllib.urlopen(toopen)
+	raw_data = u.read()
+	u.close()
+	b64_data = base64.encodestring(raw_data)
+	imgtoprint = Tkinter.PhotoImage(data=b64_data)
 
-
-	imagebox = Tkinter.Label(win, image=image2)
-	imagebox.image = image2
+	imagebox = Tkinter.Label(win, image=imgtoprint)
+	imagebox.image = imgtoprint
 	imagebox.pack()
 
 
@@ -158,17 +165,19 @@ def newpage2():
 	win.geometry("1000x1000")
 
 #map for first target location 
-	get_static_google_map("image2", center=data_from_xml[6][1]+","+data_from_xml[7][1], zoom=8, imgsize=(500,500), imgformat="png", maptype="satellite")
-	im = PIL.Image.open("image2.png")
+	toopen = get_static_google_map("image2", center=data_from_xml[6][0]+","+data_from_xml[7][0], zoom=8, imgsize=(500,500), imgformat="gif", maptype="satellite")
+	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 	# pick an image file you have .bmp  .jpg  .gif.  .png
 	# load the file and covert it to a Tkinter image object
-	imageFile = "image2.png"
-	image2 = ImageTk.PhotoImage(Image.open(imageFile))
+	u = urllib.urlopen(toopen)
+	raw_data = u.read()
+	u.close()
+	b64_data = base64.encodestring(raw_data)
+	imgtoprint = Tkinter.PhotoImage(data=b64_data)
 
-
-	imagebox = Tkinter.Label(win, image=image2)
-	imagebox.image = image2
+	imagebox = Tkinter.Label(win, image=imgtoprint)
+	imagebox.image = imgtoprint
 	imagebox.pack()
 
 #key info for second target location
@@ -214,17 +223,19 @@ def newpage3():
 	win.geometry("1000x1000")
 
 #map for third target location
-	get_static_google_map("image2", center=data_from_xml[6][2]+","+data_from_xml[7][2], zoom=8, imgsize=(500,500), imgformat="png", maptype="satellite")
-	im = PIL.Image.open("image2.png")
+	toopen = get_static_google_map("image2", center=data_from_xml[6][0]+","+data_from_xml[7][0], zoom=8, imgsize=(500,500), imgformat="gif", maptype="satellite")
+	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 	# pick an image file you have .bmp  .jpg  .gif.  .png
 	# load the file and covert it to a Tkinter image object
-	imageFile = "image2.png"
-	image2 = ImageTk.PhotoImage(Image.open(imageFile))
+	u = urllib.urlopen(toopen)
+	raw_data = u.read()
+	u.close()
+	b64_data = base64.encodestring(raw_data)
+	imgtoprint = Tkinter.PhotoImage(data=b64_data)
 
-
-	imagebox = Tkinter.Label(win, image=image2)
-	imagebox.image = image2
+	imagebox = Tkinter.Label(win, image=imgtoprint)
+	imagebox.image = imgtoprint
 	imagebox.pack()
 
 #key info for third target location
@@ -270,17 +281,19 @@ def newpage4():
 	win.geometry("1000x1000")
 
 #map for fourth target location
-	get_static_google_map("image2", center=data_from_xml[6][3]+","+data_from_xml[7][3], zoom=8, imgsize=(500,500), imgformat="png", maptype="satellite")
-	im = PIL.Image.open("image2.png")
+	toopen = get_static_google_map("image2", center=data_from_xml[6][0]+","+data_from_xml[7][0], zoom=8, imgsize=(500,500), imgformat="gif", maptype="satellite")
+	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 	# pick an image file you have .bmp  .jpg  .gif.  .png
 	# load the file and covert it to a Tkinter image object
-	imageFile = "image2.png"
-	image2 = ImageTk.PhotoImage(Image.open(imageFile))
+	u = urllib.urlopen(toopen)
+	raw_data = u.read()
+	u.close()
+	b64_data = base64.encodestring(raw_data)
+	imgtoprint = Tkinter.PhotoImage(data=b64_data)
 
-
-	imagebox = Tkinter.Label(win, image=image2)
-	imagebox.image = image2
+	imagebox = Tkinter.Label(win, image=imgtoprint)
+	imagebox.image = imgtoprint
 	imagebox.pack()
 
 #key info for fourth target location
@@ -326,17 +339,19 @@ def newpage5():
 	win.geometry("1000x1000")
 
 #map for fifth target location 
-	get_static_google_map("image2", center=data_from_xml[6][4]+","+data_from_xml[7][4], zoom=8, imgsize=(500,500), imgformat="png", maptype="satellite")
-	im = PIL.Image.open("image2.png")
+	toopen = get_static_google_map("image2", center=data_from_xml[6][0]+","+data_from_xml[7][0], zoom=8, imgsize=(500,500), imgformat="gif", maptype="satellite")
+	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 	# pick an image file you have .bmp  .jpg  .gif.  .png
 	# load the file and covert it to a Tkinter image object
-	imageFile = "image2.png"
-	image2 = ImageTk.PhotoImage(Image.open(imageFile))
+	u = urllib.urlopen(toopen)
+	raw_data = u.read()
+	u.close()
+	b64_data = base64.encodestring(raw_data)
+	imgtoprint = Tkinter.PhotoImage(data=b64_data)
 
-
-	imagebox = Tkinter.Label(win, image=image2)
-	imagebox.image = image2
+	imagebox = Tkinter.Label(win, image=imgtoprint)
+	imagebox.image = imgtoprint
 	imagebox.pack()
 
 #key info for fifth target location
@@ -382,17 +397,19 @@ def newpage6():
 	win.geometry("1000x1000")
 
 #map for sixth target location 
-	get_static_google_map("image2", center=data_from_xml[6][5]+","+data_from_xml[7][5], zoom=8, imgsize=(500,500), imgformat="png", maptype="satellite")
-	im = PIL.Image.open("image2.png")
+	toopen = get_static_google_map("image2", center=data_from_xml[6][0]+","+data_from_xml[7][0], zoom=8, imgsize=(500,500), imgformat="gif", maptype="satellite")
+	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 	# pick an image file you have .bmp  .jpg  .gif.  .png
 	# load the file and covert it to a Tkinter image object
-	imageFile = "image2.png"
-	image2 = ImageTk.PhotoImage(Image.open(imageFile))
+	u = urllib.urlopen(toopen)
+	raw_data = u.read()
+	u.close()
+	b64_data = base64.encodestring(raw_data)
+	imgtoprint = Tkinter.PhotoImage(data=b64_data)
 
-
-	imagebox = Tkinter.Label(win, image=image2)
-	imagebox.image = image2
+	imagebox = Tkinter.Label(win, image=imgtoprint)
+	imagebox.image = imgtoprint
 	imagebox.pack()
 
 #key info for sixth target location
@@ -468,23 +485,31 @@ def mapupdater():
 		currentlatfloat= float(iss.sublat)
 		#convert radians to degrees with the equations 1 radian = 57.2957795 degrees
 		#TODO Learn how to use pi in python 
-		currentlongfloat = currentlongfloat*57.2957795
-		currentlatfloat= currentlatfloat*57.2957795
+		currentlongfloat = round(currentlongfloat*57.2957795, 3)
+		currentlatfloat= round(currentlatfloat*57.2957795, 3)
 		print(currentlongfloat)
 		print(currentlatfloat)
 		marker_list.append("markers=size:mid|label:S|color:red|"+str(currentlatfloat)+","+str(currentlongfloat)+"|")
-		get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1, imgsize=(500,500), imgformat="png", maptype="satellite", markers=marker_list)
-		im = PIL.Image.open("mymap2.png")
+		toopenupdater = get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1, imgsize=(500,500), imgformat="gif", maptype="satellite", markers=marker_list)
+		print(toopenupdater)
+		#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
+		#im = PIL.Image.open("mymap2.png")
+		uupdater = urllib.urlopen(toopenupdater)
+		raw_data_u = uupdater.read()
+		u.close()
+		b64_data_u = base64.encodestring(raw_data_u)
+		imgtoprint_u = Tkinter.PhotoImage(data=b64_data)
+
 		# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 		# pick an image file you have .bmp  .jpg  .gif.  .png
 		# load the file and covert it to a Tkinter image object
-		imageFile = "mymap2.png"
-		image1 = ImageTk.PhotoImage(Image.open(imageFile))
+		#imageFile = "mymap2.png"
+		#image1 = ImageTk.PhotoImage(Image.open(imageFile))
 		#image1.configure(file='mymap2.jpg')
-		panel1.configure(image = image1)
-		panel1.image = image1
+		panel1.configure(image = imgtoprint_u)
+		panel1.image = imgtoprint_u
 		#updata map after 30 seconds
-		window.after(30000, positionupdater)
+		window.after(30000, mapupdater)
 
 
 
@@ -495,7 +520,7 @@ def mapupdater():
 
 
 #background code for map
-def get_static_google_map(filename_wo_extension, center=None, zoom=None, imgsize="500x500", imgformat="jpeg",
+def get_static_google_map(filename_wo_extension, center=None, zoom=None, imgsize="500x500", imgformat="gif",
                           maptype="roadmap", markers=None ):  
     """retrieve a map (image) from the static google maps server 
     
@@ -532,10 +557,10 @@ def get_static_google_map(filename_wo_extension, center=None, zoom=None, imgsize
 
     #request += "mobile=false&"  # optional: mobile=true will assume the image is shown on a small screen (mobile device)
     request += "sensor=false&"   # must be given, deals with getting loction from mobile device 
-    #print request
+    print request
+    return request
+
     
-    urllib.urlretrieve(request, filename_wo_extension+"."+imgformat) # Option 1: save image directly to disk
-#http://effbot.org/pyfaq/how-do-you-set-a-global-variable-in-a-function.htm
 
 #setting a global variable in a function
 def fileback():
@@ -688,13 +713,31 @@ text_currentposition.pack(anchor = "w", padx = 50)#clock
 text_clock = Tkinter.Label(window, text="", font=("Helvetica", 25), bg = 'midnight blue', fg= 'white')
 text_clock.pack(anchor = "w", padx = 50)
 text_clock.place(x=300,y=10)
+marker_list = []
+timenowforcomputing = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+iss.compute(timenowforcomputing)
+currentlong = iss.sublong 
+currentlat = iss.sublat 
+currentlongfloat= float(iss.sublong)
+currentlatfloat= float(iss.sublat)
+#convert radians to degrees with the equations 1 radian = 57.2957795 degrees
+#TODO Learn how to use pi in python 
+currentlongfloat = round(currentlongfloat*57.2957795, 3)
+currentlatfloat= round(currentlatfloat*57.2957795, 3)
+marker_list.append("markers=size:mid|label:S|color:red|"+str(currentlatfloat)+","+str(currentlongfloat)+"|")
 
 #places map into GUI
-get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1, imgsize=(500,500), imgformat="png", maptype="satellite")
-im = PIL.Image.open("mymap2.png")
-imageFile = "mymap2.png"
-image1 = ImageTk.PhotoImage(Image.open(imageFile))
-panel1 = Tkinter.Label(window, image=image1, bg='black')
+toopen = get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1, imgsize=(500,500), imgformat="gif", maptype="satellite", markers=marker_list)
+#im = PIL.Image.open("mymap2.png")
+#imageFile = "mymap2.png"
+#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
+print(toopen)
+u = urllib.urlopen(toopen)
+raw_data = u.read()
+u.close()
+b64_data = base64.encodestring(raw_data)
+imgtoprint = Tkinter.PhotoImage(data=b64_data)
+panel1 = Tkinter.Label(window, image=imgtoprint, bg='black')
 panel1.pack(side='top', fill='both', expand='yes')
 panel1.place(x=250, y=115)
 b = Button(window, text="Browse for XML File", font=("Helvetica", 15), command=fileback, bg = 'black')
