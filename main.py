@@ -1,4 +1,7 @@
 #!/usr/bin/python
+
+#-----Begin Imports-----#
+
 #below are the imported modules for all of our operations
 import sys #gives access to a variety of parameters and functions 
 import math #function for mathematical operations
@@ -29,7 +32,10 @@ import csv  #where csv = comma separated values --> format for spreadsheets and 
 #below we are defining our global variables for our code
 import StringIO
 import cStringIO, base64
+#-----End Imports-----#
 
+
+#-----Begin Global Declarations-----#
 global filename 
 filename = ''
 #Import base64 for converting gif into binary  
@@ -50,6 +56,12 @@ global currentlongfloat
 currentlongfloat = 0.001
 global currentlatfloat
 currentlatfloat = 0.001
+global futureonoff
+futureonoff = True
+#-----End Global Declarations-----#
+
+
+
 #Code modified from http://brainwagon.org/2009/09/27/how-to-use-python-to-predict-satellite-locations/
 #We need to extract the two line element for just the iss from http://www.celestrak.com/NORAD/elements/stations.txt
 iss = ephem.readtle(stations_text_file[0],
@@ -69,20 +81,20 @@ window.self.pack(fill="both", expand=True)
 
 #draw the window, and start the 'application'
 
-timetoadd=0
+timetoadd=5
 timenow = datetime.datetime.utcnow()
 iss.compute(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
 global long_list_3_orbits
 long_list_3_orbits = []
 global lat_list_3_orbits
 lat_list_3_orbits = []
-while timetoadd < 270:
+while timetoadd < 90*2:
 	#print(timenow + datetime.timedelta(0,timetoadd*60))
 	#print(timenow)
 	iss.compute(timenow + datetime.timedelta(0,timetoadd*60))
-	long_list_3_orbits.append(iss.sublong)
-	lat_list_3_orbits.append(iss.sublat)
-	timetoadd = timetoadd + 1
+	long_list_3_orbits.append(round(float(iss.sublong)*57.2957795,3))
+	lat_list_3_orbits.append(round(float(iss.sublat)*57.2957795,3))
+	timetoadd = timetoadd + 5
 	#print(iss.sublong)
 	#print(iss.sublat)
 	#print(timetoadd)
@@ -476,40 +488,46 @@ def positionupdater():
 
 #updating map based on ISS location
 def mapupdater():
-		marker_list = []
-		timenowforcomputing = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-		iss.compute(timenowforcomputing)
-		currentlong = iss.sublong 
-		currentlat = iss.sublat 
-		currentlongfloat= float(iss.sublong)
-		currentlatfloat= float(iss.sublat)
-		#convert radians to degrees with the equations 1 radian = 57.2957795 degrees
-		#TODO Learn how to use pi in python 
-		currentlongfloat = round(currentlongfloat*57.2957795, 3)
-		currentlatfloat= round(currentlatfloat*57.2957795, 3)
-		print(currentlongfloat)
-		print(currentlatfloat)
-		marker_list.append("markers=size:mid|label:S|color:red|"+str(currentlatfloat)+","+str(currentlongfloat)+"|")
-		toopenupdater = get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1, imgsize=(500,500), imgformat="gif", maptype="satellite", markers=marker_list)
-		print(toopenupdater)
-		#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
-		#im = PIL.Image.open("mymap2.png")
-		uupdater = urllib.urlopen(toopenupdater)
-		raw_data_u = uupdater.read()
-		u.close()
-		b64_data_u = base64.encodestring(raw_data_u)
-		imgtoprint_u = Tkinter.PhotoImage(data=b64_data)
+	global futureonoff
+	marker_list = []
+	timenowforcomputing = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+	iss.compute(timenowforcomputing)
+	currentlong = iss.sublong 
+	currentlat = iss.sublat 
+	currentlongfloat= float(iss.sublong)
+	currentlatfloat= float(iss.sublat)
+	#convert radians to degrees with the equations 1 radian = 57.2957795 degrees
+	#TODO Learn how to use pi in python 
+	currentlongfloat = round(currentlongfloat*57.2957795, 3)
+	currentlatfloat= round(currentlatfloat*57.2957795, 3)
+	print(currentlongfloat)
+	print(currentlatfloat)
+	if futureonoff == True:
+		futureintermenter = 0
+		while futureintermenter < len(long_list_3_orbits):
+			marker_list.append("markers=size:mid|label:F|color:blue|"+str(lat_list_3_orbits[futureintermenter])+","+str(long_list_3_orbits[futureintermenter])+"|")
+			futureintermenter = futureintermenter + 1
+	marker_list.append("markers=size:mid|label:S|color:red|"+str(currentlatfloat)+","+str(currentlongfloat)+"|")
+	toopenupdater = get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1, imgsize=(500,500), imgformat="gif", maptype="satellite", markers=marker_list)
+	#print(toopenupdater)
+	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
+	#im = PIL.Image.open("mymap2.png")
+	uupdater = urllib.urlopen(toopenupdater)
+	raw_data_u = uupdater.read()
+	u.close()
+	b64_data_u = base64.encodestring(raw_data_u)
+	imgtoprint = Tkinter.PhotoImage(data=b64_data)
 
-		# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
-		# pick an image file you have .bmp  .jpg  .gif.  .png
-		# load the file and covert it to a Tkinter image object
-		#imageFile = "mymap2.png"
-		#image1 = ImageTk.PhotoImage(Image.open(imageFile))
-		#image1.configure(file='mymap2.jpg')
-		panel1.configure(image = imgtoprint_u)
-		panel1.image = imgtoprint_u
-		#updata map after 30 seconds
-		window.after(30000, mapupdater)
+	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
+	# pick an image file you have .bmp  .jpg  .gif.  .png
+	# load the file and covert it to a Tkinter image object
+	#imageFile = "mymap2.png"
+	#image1 = ImageTk.PhotoImage(Image.open(imageFile))
+	#image1.configure(file='mymap2.jpg')
+	panel1.configure(image = imgtoprint)
+	panel1.image = imgtoprint
+	#updata map after 30 seconds
+	window.after(30000, mapupdater)
 
 
 
@@ -561,7 +579,15 @@ def get_static_google_map(filename_wo_extension, center=None, zoom=None, imgsize
     return request
 
     
-
+def togglemap():
+	global futureonoff
+	print(futureonoff)
+	if futureonoff == True:
+		futureonoff = False
+	else:
+		futureonoff = True
+	mapupdater()
+	print(futureonoff)
 #setting a global variable in a function
 def fileback():
 	global filename
@@ -664,8 +690,8 @@ def fileread():
 	#print(Lens)
 	#print(weather)
 	#print(nadir_true_false)
-	print(targetlong)
-	print(targetlat)
+	#print(targetlong)
+	#print(targetlat)
 	#print(data_from_xml[0][1])
 
 	
@@ -724,18 +750,23 @@ currentlatfloat= float(iss.sublat)
 #TODO Learn how to use pi in python 
 currentlongfloat = round(currentlongfloat*57.2957795, 3)
 currentlatfloat= round(currentlatfloat*57.2957795, 3)
+if futureonoff == True:
+	futureintermenter = 0
+	while futureintermenter < len(long_list_3_orbits):
+		marker_list.append("markers=size:mid|label:F|color:blue|"+str(lat_list_3_orbits[futureintermenter])+","+str(long_list_3_orbits[futureintermenter])+"|")
+		futureintermenter = futureintermenter + 1
 marker_list.append("markers=size:mid|label:S|color:red|"+str(currentlatfloat)+","+str(currentlongfloat)+"|")
-
 #places map into GUI
 toopen = get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1, imgsize=(500,500), imgformat="gif", maptype="satellite", markers=marker_list)
 #im = PIL.Image.open("mymap2.png")
 #imageFile = "mymap2.png"
 #Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
-print(toopen)
+#print(toopen)
 u = urllib.urlopen(toopen)
 raw_data = u.read()
 u.close()
 b64_data = base64.encodestring(raw_data)
+global imgtoprint
 imgtoprint = Tkinter.PhotoImage(data=b64_data)
 panel1 = Tkinter.Label(window, image=imgtoprint, bg='black')
 panel1.pack(side='top', fill='both', expand='yes')
@@ -743,6 +774,9 @@ panel1.place(x=250, y=115)
 b = Button(window, text="Browse for XML File", font=("Helvetica", 15), command=fileback, bg = 'black')
 b.pack()
 b.place(x=425,y=650)
+c = Button(window, text="Toggle Orbit Prediction on Map", font=("Helvetica", 15), command=togglemap, bg = 'black')
+c.pack()
+c.place(x=425,y=850)
 
 positionupdater()
 mapupdater()
