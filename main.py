@@ -144,7 +144,7 @@ def newpage1():
 	text_longlat.pack(anchor = "w", padx = 50)
 	text_longlat.place(x=50,y=525)
 	text_longlat.configure(text= "Location of Target: " + data_from_xml[5][0])
-	
+
 	text_weather = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_weather.pack(anchor = "w", padx = 50)
 	text_weather.place(x=50,y=550)
@@ -160,7 +160,7 @@ def newpage1():
 	text_nadir.place(x=50,y=625)
 	text_nadir.configure(text=data_from_xml[4][0])
 
-	
+
 
 
 
@@ -488,6 +488,11 @@ def positionupdater():
 	window.after(1000, positionupdater)
 def buttonclock():
 	text_position1.configure(text=data_from_xml[0][0] + " in " + nextpass.get(data_from_xml[6][0],data_from_xml[7][0],iss))
+	text_position2.configure(text=data_from_xml[0][1] + " in " + nextpass.get(data_from_xml[6][1],data_from_xml[7][1],iss))
+	text_position3.configure(text=data_from_xml[0][2] + " in " + nextpass.get(data_from_xml[6][2],data_from_xml[7][2],iss))
+	text_position4.configure(text=data_from_xml[0][3] + " in " + nextpass.get(data_from_xml[6][3],data_from_xml[7][3],iss))
+	text_position5.configure(text=data_from_xml[0][5] + " in " + nextpass.get(data_from_xml[6][5],data_from_xml[7][5],iss))
+	text_position6.configure(text=data_from_xml[0][6] + " in " + nextpass.get(data_from_xml[6][6],data_from_xml[7][6],iss))
 	window.after(1000, buttonclock)
 
 #updating map based on ISS location
@@ -617,7 +622,7 @@ def fileread():
 		locations_list.append(location_storeage)
 	#print(locations)
 	#print(locations_list)
-	
+
 
 	#displays notes extracted from XML file
 	global GMT
@@ -698,9 +703,15 @@ def fileread():
 	#print(targetlat)
 	#print(data_from_xml[0][1])
 
-	
+
 	#creating the buttons for each one of the locations, each button brings up a new page with target info
 	global text_position1
+	global text_position2
+	global text_position3
+	global text_position4
+	global text_position5
+	global text_position6
+
 	text_position1 = Button(window, text="", font=("Helvetica", 15), command=newpage1)
 	text_position1.pack(anchor = "w", padx = 50)
 	text_position1.place(x=50,y=350)
@@ -719,7 +730,7 @@ def fileread():
 	text_position6 = Button(window, text="", font=("Helvetica", 15), command=newpage6)
 	text_position6.pack(anchor = "w", padx = 50)
 	text_position6.place(x=50,y=600)
-	
+
 	text_todaystargets = Tkinter.Label(window, text="Today's Targets", font=("Helvetica", 15), bg='light blue')
 	text_todaystargets.pack(anchor = "w", padx = 50)
 	text_todaystargets.place(x=50,y=300)
