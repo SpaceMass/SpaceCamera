@@ -76,9 +76,16 @@ iss = ephem.readtle(stations_text_file[0],
 #Create a new window 
 window = Tkinter.Tk()
 window.wm_title("SpaceMass")
-window.geometry("1000x1000")
 window.self= Text(bg='black')
 window.self.pack(fill="both", expand=True)
+def center_window(w=1000, h=1000):
+	ws = window.winfo_screenwidth()
+	hs = window.winfo_screenheight()
+	#calculate position x,y
+	x = (ws/2) - (w/2)
+	y = (hs/2) - (h/2)
+	window.geometry('%dx%d+%d+%d' % (w, h, x, y))
+center_window(1000, 775)
 
 #draw the window, and start the 'application'
 
@@ -192,17 +199,18 @@ def newpage2():
 	imagebox = Tkinter.Label(win, image=imgtoprint)
 	imagebox.image = imgtoprint
 	imagebox.pack()
+	imagebox.place(relx=0.25, rely=0.38, anchor=CENTER)
 
 #key info for second target location
 	text_locationname2 = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname2.pack(anchor = "w", padx = 50)
-	text_locationname2.place(x=400,y=50)
+	text_locationname2.place(relx=0.5,rely=0.06, anchor=CENTER)
 	text_locationname2.configure(text=data_from_xml[0][1])
 
 	text_passingtime2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_passingtime2.pack(anchor = "w", padx = 50)
 	text_passingtime2.place(x=50,y=500)
-	text_passingtime2.configure(text= "Time of Next Pass: " + data_from_xml[1][1])
+	text_passingtime2.configure(text= "TIME OF NEXT PASS: " + data_from_xml[1][1])
 
 	text_longlat2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
 	text_longlat2.pack(anchor = "w", padx = 50)
@@ -491,8 +499,8 @@ def buttonclock():
 	text_position2.configure(text=data_from_xml[0][1] + " in " + nextpass.get(data_from_xml[6][1],data_from_xml[7][1],iss))
 	text_position3.configure(text=data_from_xml[0][2] + " in " + nextpass.get(data_from_xml[6][2],data_from_xml[7][2],iss))
 	text_position4.configure(text=data_from_xml[0][3] + " in " + nextpass.get(data_from_xml[6][3],data_from_xml[7][3],iss))
-	text_position5.configure(text=data_from_xml[0][5] + " in " + nextpass.get(data_from_xml[6][5],data_from_xml[7][5],iss))
-	text_position6.configure(text=data_from_xml[0][6] + " in " + nextpass.get(data_from_xml[6][6],data_from_xml[7][6],iss))
+	text_position5.configure(text=data_from_xml[0][4] + " in " + nextpass.get(data_from_xml[6][4],data_from_xml[7][4],iss))
+	text_position6.configure(text=data_from_xml[0][5] + " in " + nextpass.get(data_from_xml[6][5],data_from_xml[7][5],iss))
 	window.after(1000, buttonclock)
 
 #updating map based on ISS location
