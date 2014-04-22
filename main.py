@@ -32,6 +32,7 @@ import csv  #where csv = comma separated values --> format for spreadsheets and 
 #below we are defining our global variables for our code
 import StringIO
 import cStringIO, base64
+import nextpass
 #-----End Imports-----#
 
 
@@ -74,20 +75,10 @@ iss = ephem.readtle(stations_text_file[0],
 
 #Create a new window 
 window = Tkinter.Tk()
-window.resizable(0,0)
 window.wm_title("SpaceMass")
-window.self= Text(bg='white')
+window.geometry("1000x1000")
+window.self= Text(bg='black')
 window.self.pack(fill="both", expand=True)
-#Code fixed from daniweb.com: http://www.daniweb.com/software-development/python/threads/66181/center-a-tkinter-window
-def center_window(w=1000, h=1000):
-# get screen width and height
-    ws = window.winfo_screenwidth()
-    hs = window.winfo_screenheight()
-    # calculate position x, y
-    x = (ws/2) - (w/2)    
-    y = (hs/2) - (h/2)
-    window.geometry('%dx%d+%d+%d' % (w, h, x, y))
-center_window(1000, 775)
 
 #draw the window, and start the 'application'
 
@@ -114,14 +105,13 @@ while timetoadd < 90*2:
 #create a target information window for first location
 def newpage1():
 	win=Toplevel()
-	win.resizable(0,0)
 	message = "Target Information"
 	Label(win, text=message).pack()
 	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15))
 	close.pack()
 	close.place(x=450,y=650)
 	win.wm_title("SpaceMass")
-	
+	win.geometry("1000x1000")
 #map for first target location 
 	toopen = get_static_google_map("image2", center=data_from_xml[6][0]+","+data_from_xml[7][0], zoom=8, imgsize=(500,500), imgformat="gif", maptype="satellite")
 	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
@@ -137,14 +127,12 @@ def newpage1():
 	imagebox = Tkinter.Label(win, image=imgtoprint)
 	imagebox.image = imgtoprint
 	imagebox.pack()
-	imagebox.place(relx=.25, rely=0.38, anchor=CENTER)
 
 
 #key information for first target location
-
 	text_locationname = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname.pack(anchor = "w", padx = 50)
-	text_locationname.place(relx=0.5, rely=0.04, anchor=CENTER)
+	text_locationname.place(x=400,y=50)
 	text_locationname.configure(text=data_from_xml[0][0])
 
 	text_passingtime = Tkinter.Label(win, text="", font=("Helvetica", 15))
@@ -181,7 +169,6 @@ def newpage1():
 #create a target information window for second location
 def newpage2():
 	win=Toplevel()
-
 	message = "Target Information"
 	Label(win, text=message).pack()
 	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15))
@@ -191,7 +178,7 @@ def newpage2():
 	win.geometry("1000x1000")
 
 #map for first target location 
-	toopen = get_static_google_map("image2", center=data_from_xml[6][0]+","+data_from_xml[7][0], zoom=8, imgsize=(500,500), imgformat="gif", maptype="satellite")
+	toopen = get_static_google_map("image2", center=data_from_xml[6][1]+","+data_from_xml[7][1], zoom=8, imgsize=(500,500), imgformat="gif", maptype="satellite")
 	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 	# pick an image file you have .bmp  .jpg  .gif.  .png
@@ -205,12 +192,11 @@ def newpage2():
 	imagebox = Tkinter.Label(win, image=imgtoprint)
 	imagebox.image = imgtoprint
 	imagebox.pack()
-	imagebox.place(relx=.25, rely=0.38, anchor=CENTER)
 
 #key info for second target location
 	text_locationname2 = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname2.pack(anchor = "w", padx = 50)
-	text_locationname2.place(relx=0.5, rely=0.06, anchor=CENTER)
+	text_locationname2.place(x=400,y=50)
 	text_locationname2.configure(text=data_from_xml[0][1])
 
 	text_passingtime2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
@@ -241,7 +227,6 @@ def newpage2():
 #create a target information window for third location
 def newpage3():
 	win=Toplevel()
-	win.resizable(0,0)
 	message = "Target Information"
 	Label(win, text=message).pack()
 	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15))
@@ -251,7 +236,7 @@ def newpage3():
 	win.geometry("1000x1000")
 
 #map for third target location
-	toopen = get_static_google_map("image2", center=data_from_xml[6][0]+","+data_from_xml[7][0], zoom=8, imgsize=(400,400), imgformat="gif", maptype="satellite")
+	toopen = get_static_google_map("image2", center=data_from_xml[6][2]+","+data_from_xml[7][2], zoom=8, imgsize=(500,500), imgformat="gif", maptype="satellite")
 	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 	# pick an image file you have .bmp  .jpg  .gif.  .png
@@ -264,12 +249,12 @@ def newpage3():
 
 	imagebox = Tkinter.Label(win, image=imgtoprint)
 	imagebox.image = imgtoprint
-	imagebox.place(relx=0.5, rely=0.28, anchor=CENTER)
+	imagebox.pack()
 
 #key info for third target location
 	text_locationname3 = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname3.pack(anchor = "w", padx = 50)
-	text_locationname3.place(relx=0.5, rely=0.04, anchor=CENTER)
+	text_locationname3.place(x=400,y=50)
 	text_locationname3.configure(text=data_from_xml[0][2])
 
 	text_passingtime3 = Tkinter.Label(win, text="", font=("Helvetica", 15))
@@ -300,7 +285,6 @@ def newpage3():
 #create a target information window for fourth location
 def newpage4():
 	win=Toplevel()
-	win.resizable(0,0)
 	message = "Target Information"
 	Label(win, text=message).pack()
 	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15))
@@ -310,7 +294,7 @@ def newpage4():
 	win.geometry("1000x1000")
 
 #map for fourth target location
-	toopen = get_static_google_map("image2", center=data_from_xml[6][0]+","+data_from_xml[7][0], zoom=8, imgsize=(400,400), imgformat="gif", maptype="satellite")
+	toopen = get_static_google_map("image2", center=data_from_xml[6][3]+","+data_from_xml[7][3], zoom=8, imgsize=(500,500), imgformat="gif", maptype="satellite")
 	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 	# pick an image file you have .bmp  .jpg  .gif.  .png
@@ -323,12 +307,12 @@ def newpage4():
 
 	imagebox = Tkinter.Label(win, image=imgtoprint)
 	imagebox.image = imgtoprint
-	imagebox.place(relx=0.5, rely=0.28, anchor=CENTER)
+	imagebox.pack()
 
 #key info for fourth target location
 	text_locationname4 = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname4.pack(anchor = "w", padx = 50)
-	text_locationname4.place(relx=0.5, rely=0.04, anchor=CENTER)
+	text_locationname4.place(x=400,y=50)
 	text_locationname4.configure(text=data_from_xml[0][3])
 
 	text_passingtime4 = Tkinter.Label(win, text="", font=("Helvetica", 15))
@@ -359,7 +343,6 @@ def newpage4():
 #create a target information window for fifth location
 def newpage5():
 	win=Toplevel()
-	win.resizable(0,0)
 	message = "Target Information"
 	Label(win, text=message).pack()
 	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15))
@@ -369,7 +352,7 @@ def newpage5():
 	win.geometry("1000x1000")
 
 #map for fifth target location 
-	toopen = get_static_google_map("image2", center=data_from_xml[6][0]+","+data_from_xml[7][0], zoom=8, imgsize=(400,400), imgformat="gif", maptype="satellite")
+	toopen = get_static_google_map("image2", center=data_from_xml[6][4]+","+data_from_xml[7][4], zoom=8, imgsize=(500,500), imgformat="gif", maptype="satellite")
 	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 	# pick an image file you have .bmp  .jpg  .gif.  .png
@@ -382,12 +365,12 @@ def newpage5():
 
 	imagebox = Tkinter.Label(win, image=imgtoprint)
 	imagebox.image = imgtoprint
-	imagebox.place(relx=0.5, rely=0.28, anchor=CENTER)
+	imagebox.pack()
 
 #key info for fifth target location
 	text_locationname5 = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname5.pack(anchor = "w", padx = 50)
-	text_locationname5.place(relx=0.5, rely=0.04, anchor=CENTER)
+	text_locationname5.place(x=400,y=50)
 	text_locationname5.configure(text=data_from_xml[0][4])
 
 	text_passingtime5 = Tkinter.Label(win, text="", font=("Helvetica", 15))
@@ -418,7 +401,6 @@ def newpage5():
 #create a target information window for sixth location
 def newpage6():
 	win=Toplevel()
-	window.resizable(0,0)
 	message = "Target Information"
 	Label(win, text=message).pack()
 	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15))
@@ -428,7 +410,7 @@ def newpage6():
 	win.geometry("1000x1000")
 
 #map for sixth target location 
-	toopen = get_static_google_map("image2", center=data_from_xml[6][0]+","+data_from_xml[7][0], zoom=8, imgsize=(400,400), imgformat="gif", maptype="satellite")
+	toopen = get_static_google_map("image2", center=data_from_xml[6][5]+","+data_from_xml[7][5], zoom=8, imgsize=(500,500), imgformat="gif", maptype="satellite")
 	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 	# pick an image file you have .bmp  .jpg  .gif.  .png
@@ -441,12 +423,12 @@ def newpage6():
 
 	imagebox = Tkinter.Label(win, image=imgtoprint)
 	imagebox.image = imgtoprint
-	imagebox.place(relx=0.5, rely=0.28, anchor=CENTER)
+	imagebox.pack()
 
 #key info for sixth target location
 	text_locationname6 = Tkinter.Label(win, text="", font=("Helvetica", 25))
 	text_locationname6.pack(anchor = "w", padx = 50)
-	text_locationname6.place(relx=0.5, rely=0.04, anchor=CENTER)
+	text_locationname6.place(x=400,y=50)
 	text_locationname6.configure(text=data_from_xml[0][5])
 
 	text_passingtime6 = Tkinter.Label(win, text="", font=("Helvetica", 15))
@@ -504,6 +486,9 @@ def positionupdater():
 	text_clock.configure(text="Date: " + str(timenow) + "   Time: " + str(datenow))
 	#TODO split the clock thread and the map thread. We need to slow down the clock to get the google API to work, but now the clock counts slow
 	window.after(1000, positionupdater)
+def buttonclock():
+	text_position1.configure(text=data_from_xml[0][0] + " in " + nextpass.get(data_from_xml[6][0],data_from_xml[7][0],iss))
+	window.after(1000, buttonclock)
 
 #updating map based on ISS location
 def mapupdater():
@@ -715,6 +700,7 @@ def fileread():
 
 	
 	#creating the buttons for each one of the locations, each button brings up a new page with target info
+	global text_position1
 	text_position1 = Button(window, text="", font=("Helvetica", 15), command=newpage1)
 	text_position1.pack(anchor = "w", padx = 50)
 	text_position1.place(x=50,y=350)
@@ -744,6 +730,7 @@ def fileread():
 	text_position4.configure(text=data_from_xml[0][3])
 	text_position5.configure(text=data_from_xml[0][4])
 	text_position6.configure(text=data_from_xml[0][5])
+	buttonclock()
 
 	#text_file.configure(text=testing)
 #Info about buttons http://effbot.org/tkinterbook/button.htm
@@ -787,13 +774,13 @@ u.close()
 b64_data = base64.encodestring(raw_data)
 global imgtoprint
 imgtoprint = Tkinter.PhotoImage(data=b64_data)
-panel1 = Tkinter.Label(window, image=imgtoprint, bg='white')
+panel1 = Tkinter.Label(window, image=imgtoprint, bg='black')
 panel1.pack(side='top', fill='both', expand='yes')
-panel1.place(x=250, y=125)
-b = Button(window, text="Browse for XML File", font=("Helvetica", 15), command=fileback, bg = 'white')
+panel1.place(x=250, y=115)
+b = Button(window, text="Browse for XML File", font=("Helvetica", 15), command=fileback, bg = 'black')
 b.pack()
 b.place(x=425,y=650)
-c = Button(window, text="Toggle Orbit Prediction on Map", font=("Helvetica", 15), command=togglemap, bg = 'white')
+c = Button(window, text="Toggle Orbit Prediction on Map", font=("Helvetica", 15), command=togglemap, bg = 'black')
 c.pack()
 c.place(x=425,y=850)
 
