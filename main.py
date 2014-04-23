@@ -66,7 +66,10 @@ lat_list_3_orbits = []
 #-----End Global Declarations-----#
 
 
-
+print("LOADING PLEASE WAIT")
+print("LOADING PLEASE WAIT")
+print("LOADING PLEASE WAIT")
+print("LOADING PLEASE WAIT")
 #Code modified from http://brainwagon.org/2009/09/27/how-to-use-python-to-predict-satellite-locations/
 #We need to extract the two line element for just the iss from http://www.celestrak.com/NORAD/elements/stations.txt
 iss = ephem.readtle(stations_text_file[0],
@@ -887,19 +890,19 @@ def get_static_google_map(filename_wo_extension, center=None, zoom=None, imgsize
 
     #request += "mobile=false&"  # optional: mobile=true will assume the image is shown on a small screen (mobile device)
     request += "sensor=false&"   # must be given, deals with getting loction from mobile device 
-    print request
+    #print request
     return request
 
     
 def togglemap():
 	global futureonoff
-	print(futureonoff)
+	#print(futureonoff)
 	if futureonoff == True:
 		futureonoff = False
 	else:
 		futureonoff = True
 	mapupdater()
-	print(futureonoff)
+	#print(futureonoff)
 #setting a global variable in a function
 def fileback():
 	global filename
@@ -924,12 +927,12 @@ def fileread():
 		locations.append(location_storeage)
 		locations_list.append(location_storeage)
 	loadincoment = len(locations_list) 
-	print loadincoment
+	#print loadincoment
 	while loadincoment <= 5:
 		locations.append("None")
 		locations_list.append("None")
 		loadincoment = loadincoment + 1
-	print locations_list
+	#print locations_list
 	#print(locations)
 	#print(locations_list)
 
