@@ -689,8 +689,13 @@ def fileread():
 		targetlat.append(lat_storage)
 		long_storage=elem.get('lon')
 		long_storage= str(float(long_storage)*57.2957795)
-
 		targetlong.append(long_storage)
+		timingdata = nextpass.full(lat_storage,long_storage,iss)
+		risetime.append(timingdata[0])
+		riseazimuth.append(timingdata[1])
+		settime.append(timingdata[2])
+		setazimuth(timingdata[3])
+		print(timingdata)
 		print(lat_storage)
 		print(long_storage)
 
@@ -703,6 +708,11 @@ def fileread():
 	data_from_xml.append(track)
 	data_from_xml.append(targetlat)
 	data_from_xml.append(targetlong)
+	data_from_xml.append(risetime)
+	data_from_xml.append
+	print(targetlat)
+	print(targetlong)
+	print(timingdata)
 	#print(notes)
 	#print(Lens)
 	#print(weather)
@@ -739,9 +749,9 @@ def fileread():
 	text_position6.pack(anchor = "w", padx = 50)
 	text_position6.place(x=50,y=600)
 
-	text_todaystargets = Tkinter.Label(window, text="Today's Targets", font=("Helvetica", 15), bg='black', fg='white')
+	text_todaystargets = Tkinter.Label(window, text="Today's Targets", font=("Helvetica", 15), bg='light blue')
 	text_todaystargets.pack(anchor = "w", padx = 50)
-	text_todaystargets.place(relx=0.8,rely=0.25, anchor=CENTER)
+	text_todaystargets.place(x=50,y=300)
 
 	text_position1.configure(text=data_from_xml[0][0])
 	text_position2.configure(text=data_from_xml[0][1])
