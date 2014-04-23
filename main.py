@@ -33,7 +33,6 @@ import csv  #where csv = comma separated values --> format for spreadsheets and 
 import StringIO
 import cStringIO, base64
 import nextpass
-import textwrap
 #-----End Imports-----#
 
 
@@ -76,7 +75,7 @@ iss = ephem.readtle('ISS',
 
 #Create a new window 
 window = Tkinter.Tk()
-window.wm_title("SpaceMass")
+window.wm_title("Group 9")
 window.self= Text(bg='black')
 window.self.pack(fill="both", expand=True)
 def center_window(w=1000, h=1000):
@@ -114,14 +113,15 @@ while timetoadd < 90*2:
 def newpage1():
 	win=Toplevel()
 	message = "Target Information"
-	Label(win, text=message).pack()
-	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15))
+	Label(win, text=message, bg = 'black', fg = 'white').pack()
+	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15), bg = 'white')
 	close.pack()
-	close.place(x=450,y=650)
+	close.place(relx=0.5, rely=0.7, anchor=CENTER)
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
+	win.configure(bg='black')
 #map for first target location 
-	toopen = get_static_google_map("image2", center=data_from_xml[6][0]+","+data_from_xml[7][0], zoom=8, imgsize=(500,500), imgformat="gif", maptype="satellite")
+	toopen = get_static_google_map("image2", center=data_from_xml[6][0]+","+data_from_xml[7][0], zoom=8, imgsize=(400,400), imgformat="gif", maptype="satellite")
 	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 	# pick an image file you have .bmp  .jpg  .gif.  .png
@@ -135,56 +135,68 @@ def newpage1():
 	imagebox = Tkinter.Label(win, image=imgtoprint)
 	imagebox.image = imgtoprint
 	imagebox.pack()
+	imagebox.place(relx=0.25, rely=0.38, anchor=CENTER)
 
 
 #key information for first target location
-	text_locationname = Tkinter.Label(win, text="", font=("Helvetica", 25))
+	text_locationname = Tkinter.Label(win, text="", font=("Helvetica", 25), bg = 'black', fg = 'white')
 	text_locationname.pack(anchor = "w", padx = 50)
-	text_locationname.place(x=400,y=50)
+	text_locationname.place(relx=0.5, rely=0.05, anchor=CENTER)
 	text_locationname.configure(text=data_from_xml[0][0])
 
-	text_passingtime_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_passingtime_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_passingtime_1.pack(anchor = "w", padx = 50)
 	text_passingtime_1.place(relx=0.75, rely=0.2, anchor=CENTER)
 	text_passingtime_1.configure(text= "TIME OF NEXT PASS:")
 
-	text_passingtime_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_passingtime_2.pack(anchor = "w", padx = 50)
-	text_passingtime_2.place(relx=0.75, rely=0.24, anchor=CENTER)
-	text_passingtime_2.configure(text= data_from_xml[1][0])
+	text_passingtime = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_passingtime.pack(anchor = "w", padx = 50)
+	text_passingtime.place(relx=0.75, rely=0.23, anchor=CENTER)
+	text_passingtime.configure(text = data_from_xml[1][0])
 
-	text_longlat_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_longlat_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_longlat_1.pack(anchor = "w", padx = 50)
 	text_longlat_1.place(relx=0.75, rely=0.3, anchor=CENTER)
 	text_longlat_1.configure(text= "LOCATION OF TARGET:")
 
-	text_longlat_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_longlat_2.pack(anchor = "w", padx = 50)
-	text_longlat_2.place(relx=0.75, rely=0.37, anchor=CENTER)
-	wrap_longlat1 = textwrap.fill(data_from_xml[5][0], 11)
-	text_longlat_2.configure(text= wrap_longlat1)
+	text_longlat = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_longlat.pack(anchor = "w", padx = 50)
+	text_longlat.place(relx=0.75, rely=0.33, anchor=CENTER)
+	text_longlat.configure(text= data_from_xml[5][0])
 
-	text_weather_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_weather_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_weather_1.pack(anchor = "w", padx = 50)
-	text_weather_1.place(relx=0.75, rely=0.43, anchor=CENTER)
+	text_weather_1.place(relx=0.75, rely=0.4, anchor=CENTER)
 	text_weather_1.configure(text= "WEATHER CONDITIONS")
 
-	text_weather_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_weather_2.pack(anchor = "w", padx = 50)
-	text_weather_2.place(relx=0.75, rely=0.49, anchor=CENTER)
-	wrap_weather1 = textwrap.fill(data_from_xml[3][0], 58)
-	text_weather_2.configure(text= wrap_weather1)
+	text_weather = Tkinter.Label(win, text="", font=("Helvetica", 10), bg = 'black', fg = 'white')
+	text_weather.pack(anchor = "w", padx = 50)
+	text_weather.place(relx=0.73, rely=0.43, anchor=CENTER)
+	text_weather.configure(text= data_from_xml[3][0])
 
-	text_lenstype_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_lenstype_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_lenstype_1.pack(anchor = "w", padx = 50)
-	text_lenstype_1.place(relx=0.75, rely=0.6, anchor=CENTER)
+	text_lenstype_1.place(relx=0.75, rely=0.5, anchor=CENTER)
 	text_lenstype_1.configure(text= "LENS TYPE:")
 
-	text_lenstype_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_lenstype_2.pack(anchor = "w", padx = 50)
-	text_lenstype_2.place(relx=0.75, rely=0.7, anchor=CENTER)
-	wrap_lenstype1 = textwrap.fill(data_from_xml[2][0], 4)
-	text_lenstype_2.configure(text= wrap_lenstype1)
+	text_lenstype = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_lenstype.pack(anchor = "w", padx = 50)
+	text_lenstype.place(relx=0.75, rely=0.53, anchor=CENTER)
+	text_lenstype.configure(text= data_from_xml[2][0])
+
+	text_nadir_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
+	text_nadir_1.pack(anchor = "w", padx = 50)
+	text_nadir_1.place(relx=0.75, rely=0.6, anchor=CENTER)
+	text_nadir_1.configure(text= "IS THE ISS DIRECTLY OVER TARGET: \n if YES, 1 if NO, 0")
+
+	text_nadir = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_nadir.pack(anchor = "w", padx = 50)
+	text_nadir.place(relx=0.75, rely=0.65, anchor=CENTER)
+	text_nadir.configure(text=data_from_xml[4][0])
+
+
+
+
 
 	#image1.configure(file='mymap2.jpg')
 
@@ -192,15 +204,15 @@ def newpage1():
 def newpage2():
 	win=Toplevel()
 	message = "Target Information"
-	Label(win, text=message).pack()
-	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15))
+	Label(win, text=message, bg = 'black', fg = 'white').pack()
+	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15), bg = 'white')
 	close.pack()
-	close.place(x=450,y=650)
+	close.place(relx=0.5, rely=0.7, anchor=CENTER)
 	win.wm_title("SpaceMass")
-	win.geometry("1150x1000")
-
+	win.geometry("1000x1000")
+	win.configure(bg='black')
 #map for first target location 
-	toopen = get_static_google_map("image2", center=data_from_xml[6][0]+","+data_from_xml[7][0], zoom=8, imgsize=(500,500), imgformat="gif", maptype="satellite")
+	toopen = get_static_google_map("image2", center=data_from_xml[6][1]+","+data_from_xml[7][1], zoom=8, imgsize=(400,400), imgformat="gif", maptype="satellite")
 	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 	# pick an image file you have .bmp  .jpg  .gif.  .png
@@ -214,75 +226,78 @@ def newpage2():
 	imagebox = Tkinter.Label(win, image=imgtoprint)
 	imagebox.image = imgtoprint
 	imagebox.pack()
-	imagebox.place(relx=.25, rely=0.45, anchor=CENTER)
+	imagebox.place(relx=0.25, rely=0.38, anchor=CENTER)
 
-#key info for second target location
-	text_locationname2 = Tkinter.Label(win, text="", font=("Helvetica", 25))
+
+#key information for first target location
+	text_locationname2 = Tkinter.Label(win, text="", font=("Helvetica", 25), bg = 'black', fg = 'white')
 	text_locationname2.pack(anchor = "w", padx = 50)
-	text_locationname2.place(relx=0.5, rely=0.06, anchor=CENTER)
+	text_locationname2.place(relx=0.5, rely=0.05, anchor=CENTER)
 	text_locationname2.configure(text=data_from_xml[0][1])
 
-	text_passingtime2_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_passingtime2_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_passingtime2_1.pack(anchor = "w", padx = 50)
 	text_passingtime2_1.place(relx=0.75, rely=0.2, anchor=CENTER)
 	text_passingtime2_1.configure(text= "TIME OF NEXT PASS:")
 
-	text_passingtime2_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_passingtime2_2.pack(anchor = "w", padx = 50)
-	text_passingtime2_2.place(relx=0.75, rely=0.24, anchor=CENTER)
-	text_passingtime2_2.configure(text= data_from_xml[1][1])
+	text_passingtime2 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_passingtime2.pack(anchor = "w", padx = 50)
+	text_passingtime2.place(relx=0.75, rely=0.23, anchor=CENTER)
+	text_passingtime2.configure(text = data_from_xml[1][1])
 
-	text_longlat2_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_longlat2_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_longlat2_1.pack(anchor = "w", padx = 50)
 	text_longlat2_1.place(relx=0.75, rely=0.3, anchor=CENTER)
 	text_longlat2_1.configure(text= "LOCATION OF TARGET:")
 
-	text_longlat2_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_longlat2_2.pack(anchor = "w", padx = 50)
-	text_longlat2_2.place(relx=0.75, rely=0.37, anchor=CENTER)
-	wrap_longlat2 = textwrap.fill(data_from_xml[5][1], 11)
-	text_longlat2_2.configure(text= wrap_longlat2)
+	text_longlat2 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_longlat2.pack(anchor = "w", padx = 50)
+	text_longlat2.place(relx=0.75, rely=0.33, anchor=CENTER)
+	text_longlat2.configure(text= data_from_xml[5][1])
 
-	text_weather2_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_weather2_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_weather2_1.pack(anchor = "w", padx = 50)
-	text_weather2_1.place(relx=0.75, rely=0.43, anchor=CENTER)
+	text_weather2_1.place(relx=0.75, rely=0.4, anchor=CENTER)
 	text_weather2_1.configure(text= "WEATHER CONDITIONS")
 
-	text_weather2_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_weather2_2.pack(anchor = "w", padx = 50)
-	text_weather2_2.place(relx=0.75, rely=0.49, anchor=CENTER)
-	wrap_weather2 = textwrap.fill(data_from_xml[3][1], 58)
-	text_weather2_2.configure(text= wrap_weather2)
+	text_weather2 = Tkinter.Label(win, text="", font=("Helvetica", 10), bg = 'black', fg = 'white')
+	text_weather2.pack(anchor = "w", padx = 50)
+	text_weather2.place(relx=0.73, rely=0.43, anchor=CENTER)
+	text_weather2.configure(text= data_from_xml[3][1])
 
-	text_lenstype2_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_lenstype2_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_lenstype2_1.pack(anchor = "w", padx = 50)
-	text_lenstype2_1.place(relx=0.75, rely=0.6, anchor=CENTER)
+	text_lenstype2_1.place(relx=0.75, rely=0.5, anchor=CENTER)
 	text_lenstype2_1.configure(text= "LENS TYPE:")
 
-	text_lenstype2_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_lenstype2_2.pack(anchor = "w", padx = 50)
-	text_lenstype2_2.place(relx=0.75, rely=0.7, anchor=CENTER)
-	wrap_lenstype2 = textwrap.fill(data_from_xml[2][1], 4)
-	text_lenstype2_2.configure(text= wrap_lenstype2)
+	text_lenstype2 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_lenstype2.pack(anchor = "w", padx = 50)
+	text_lenstype2.place(relx=0.75, rely=0.53, anchor=CENTER)
+	text_lenstype2.configure(text= data_from_xml[2][1])
 
-	text_nadir2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
+	text_nadir2_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
+	text_nadir2_1.pack(anchor = "w", padx = 50)
+	text_nadir2_1.place(relx=0.75, rely=0.6, anchor=CENTER)
+	text_nadi2r_1.configure(text= "IS THE ISS DIRECTLY OVER TARGET: \n if YES, 1 if NO, 0")
+
+	text_nadir2 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
 	text_nadir2.pack(anchor = "w", padx = 50)
-	text_nadir2.place(relx=0.75, rely=0.8, anchor=CENTER)
+	text_nadir2.place(relx=0.75, rely=0.65, anchor=CENTER)
 	text_nadir2.configure(text=data_from_xml[4][1])
 
 #create a target information window for third location
 def newpage3():
 	win=Toplevel()
 	message = "Target Information"
-	Label(win, text=message).pack()
-	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15))
+	Label(win, text=message, bg = 'black', fg = 'white').pack()
+	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15), bg = 'white')
 	close.pack()
-	close.place(x=450,y=650)
+	close.place(relx=0.5, rely=0.7, anchor=CENTER)
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
-
-#map for third target location
-	toopen = get_static_google_map("image2", center=data_from_xml[6][2]+","+data_from_xml[7][2], zoom=8, imgsize=(500,500), imgformat="gif", maptype="satellite")
+	win.configure(bg='black')
+#map for first target location 
+	toopen = get_static_google_map("image2", center=data_from_xml[6][2]+","+data_from_xml[7][2], zoom=8, imgsize=(400,400), imgformat="gif", maptype="satellite")
 	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 	# pick an image file you have .bmp  .jpg  .gif.  .png
@@ -296,74 +311,78 @@ def newpage3():
 	imagebox = Tkinter.Label(win, image=imgtoprint)
 	imagebox.image = imgtoprint
 	imagebox.pack()
+	imagebox.place(relx=0.25, rely=0.38, anchor=CENTER)
 
-#key info for third target location
-	text_locationname3 = Tkinter.Label(win, text="", font=("Helvetica", 25))
+
+#key information for first target location
+	text_locationname3 = Tkinter.Label(win, text="", font=("Helvetica", 25), bg = 'black', fg = 'white')
 	text_locationname3.pack(anchor = "w", padx = 50)
-	text_locationname3.place(relx=0.5, rely=0.06, anchor=CENTER)
-	text_locationname3.configure(text=data_from_xml[0][1])
+	text_locationname3.place(relx=0.5, rely=0.05, anchor=CENTER)
+	text_locationname3.configure(text=data_from_xml[0][2])
 
-	text_passingtime3_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_passingtime3_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_passingtime3_1.pack(anchor = "w", padx = 50)
 	text_passingtime3_1.place(relx=0.75, rely=0.2, anchor=CENTER)
-	text_passingtime2_1.configure(text= "TIME OF NEXT PASS:")
+	text_passingtime3_1.configure(text= "TIME OF NEXT PASS:")
 
-	text_passingtime3_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_passingtime3_2.pack(anchor = "w", padx = 50)
-	text_passingtime3_2.place(relx=0.75, rely=0.24, anchor=CENTER)
-	text_passingtime3_2.configure(text= data_from_xml[1][2])
+	text_passingtime3 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_passingtime3.pack(anchor = "w", padx = 50)
+	text_passingtime3.place(relx=0.75, rely=0.23, anchor=CENTER)
+	text_passingtime3.configure(text = data_from_xml[1][2])
 
-	text_longlat3_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_longlat3_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_longlat3_1.pack(anchor = "w", padx = 50)
 	text_longlat3_1.place(relx=0.75, rely=0.3, anchor=CENTER)
 	text_longlat3_1.configure(text= "LOCATION OF TARGET:")
 
-	text_longlat3_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_longlat3_2.pack(anchor = "w", padx = 50)
-	text_longlat3_2.place(relx=0.75, rely=0.37, anchor=CENTER)
-	wrap_longlat3 = textwrap.fill(data_from_xml[5][2], 11)
-	text_longlat3_2.configure(text= wrap_longlat3)
+	text_longlat3 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_longlat3.pack(anchor = "w", padx = 50)
+	text_longlat3.place(relx=0.75, rely=0.33, anchor=CENTER)
+	text_longlat3.configure(text= data_from_xml[5][2])
 
-	text_weather3_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_weather3_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_weather3_1.pack(anchor = "w", padx = 50)
-	text_weather3_1.place(relx=0.75, rely=0.43, anchor=CENTER)
+	text_weather3_1.place(relx=0.75, rely=0.4, anchor=CENTER)
 	text_weather3_1.configure(text= "WEATHER CONDITIONS")
 
-	text_weather3_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_weather3_2.pack(anchor = "w", padx = 50)
-	text_weather3_2.place(relx=0.75, rely=0.49, anchor=CENTER)
-	wrap_weather3 = textwrap.fill(data_from_xml[3][2], 58)
-	text_weather3_2.configure(text= wrap_weather3)
+	text_weather3 = Tkinter.Label(win, text="", font=("Helvetica", 10), bg = 'black', fg = 'white')
+	text_weather3.pack(anchor = "w", padx = 50)
+	text_weather3.place(relx=0.73, rely=0.43, anchor=CENTER)
+	text_weather3.configure(text= data_from_xml[3][2])
 
-	text_lenstype3_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_lenstype3_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_lenstype3_1.pack(anchor = "w", padx = 50)
-	text_lenstype3_1.place(relx=0.75, rely=0.6, anchor=CENTER)
+	text_lenstype3_1.place(relx=0.75, rely=0.5, anchor=CENTER)
 	text_lenstype3_1.configure(text= "LENS TYPE:")
 
-	text_lenstype3_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_lenstype3_2.pack(anchor = "w", padx = 50)
-	text_lenstype3_2.place(relx=0.75, rely=0.7, anchor=CENTER)
-	wrap_lenstype3 = textwrap.fill(data_from_xml[2][2], 4)
-	text_lenstype3_2.configure(text= wrap_lenstype3)
+	text_lenstype3 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_lenstype3.pack(anchor = "w", padx = 50)
+	text_lenstype3.place(relx=0.75, rely=0.53, anchor=CENTER)
+	text_lenstype3.configure(text= data_from_xml[2][2])
 
-	text_nadir3 = Tkinter.Label(win, text="", font=("Helvetica", 15))
+	text_nadi3_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
+	text_nadir3_1.pack(anchor = "w", padx = 50)
+	text_nadir3_1.place(relx=0.75, rely=0.6, anchor=CENTER)
+	text_nadir3_1.configure(text= "IS THE ISS DIRECTLY OVER TARGET: \n if YES, 1 if NO, 0")
+
+	text_nadir3 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
 	text_nadir3.pack(anchor = "w", padx = 50)
-	text_nadir3.place(relx=0.75, rely=0.8, anchor=CENTER)
+	text_nadir3.place(relx=0.75, rely=0.65, anchor=CENTER)
 	text_nadir3.configure(text=data_from_xml[4][2])
 
 #create a target information window for fourth location
 def newpage4():
 	win=Toplevel()
 	message = "Target Information"
-	Label(win, text=message).pack()
-	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15))
+	Label(win, text=message, bg = 'black', fg = 'white').pack()
+	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15), bg = 'white')
 	close.pack()
-	close.place(x=450,y=650)
+	close.place(relx=0.5, rely=0.7, anchor=CENTER)
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
-
-#map for fourth target location
-	toopen = get_static_google_map("image2", center=data_from_xml[6][3]+","+data_from_xml[7][3], zoom=8, imgsize=(500,500), imgformat="gif", maptype="satellite")
+	win.configure(bg='black')
+#map for first target location 
+	toopen = get_static_google_map("image2", center=data_from_xml[6][3]+","+data_from_xml[7][3], zoom=8, imgsize=(400,400), imgformat="gif", maptype="satellite")
 	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 	# pick an image file you have .bmp  .jpg  .gif.  .png
@@ -377,74 +396,78 @@ def newpage4():
 	imagebox = Tkinter.Label(win, image=imgtoprint)
 	imagebox.image = imgtoprint
 	imagebox.pack()
+	imagebox.place(relx=0.25, rely=0.38, anchor=CENTER)
 
-#key info for fourth target location
-	text_locationname4 = Tkinter.Label(win, text="", font=("Helvetica", 25))
+
+#key information for first target location
+	text_locationname4 = Tkinter.Label(win, text="", font=("Helvetica", 25), bg = 'black', fg = 'white')
 	text_locationname4.pack(anchor = "w", padx = 50)
-	text_locationname4.place(relx=0.5, rely=0.06, anchor=CENTER)
-	text_locationname4.configure(text=data_from_xml[0][1])
+	text_locationname4.place(relx=0.5, rely=0.05, anchor=CENTER)
+	text_locationname4.configure(text=data_from_xml[0][3])
 
-	text_passingtime4_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_passingtime4_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_passingtime4_1.pack(anchor = "w", padx = 50)
 	text_passingtime4_1.place(relx=0.75, rely=0.2, anchor=CENTER)
 	text_passingtime4_1.configure(text= "TIME OF NEXT PASS:")
 
-	text_passingtime4_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_passingtime4_2.pack(anchor = "w", padx = 50)
-	text_passingtime4_2.place(relx=0.75, rely=0.24, anchor=CENTER)
-	text_passingtime4_2.configure(text= data_from_xml[1][1])
+	text_passingtime4 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_passingtime4.pack(anchor = "w", padx = 50)
+	text_passingtime4.place(relx=0.75, rely=0.23, anchor=CENTER)
+	text_passingtime4.configure(text = data_from_xml[1][3])
 
-	text_longlat4_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_longlat4_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_longlat4_1.pack(anchor = "w", padx = 50)
 	text_longlat4_1.place(relx=0.75, rely=0.3, anchor=CENTER)
 	text_longlat4_1.configure(text= "LOCATION OF TARGET:")
 
-	text_longlat4_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_longlat4_2.pack(anchor = "w", padx = 50)
-	text_longlat4_2.place(relx=0.75, rely=0.37, anchor=CENTER)
-	wrap_longlat4 = textwrap.fill(data_from_xml[5][1], 11)
-	text_longlat4_2.configure(text= wrap_longlat4)
+	text_longlat4 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_longlat4.pack(anchor = "w", padx = 50)
+	text_longlat4.place(relx=0.75, rely=0.33, anchor=CENTER)
+	text_longlat4.configure(text= data_from_xml[5][3])
 
-	text_weather4_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_weather4_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_weather4_1.pack(anchor = "w", padx = 50)
-	text_weather4_1.place(relx=0.75, rely=0.43, anchor=CENTER)
+	text_weather4_1.place(relx=0.75, rely=0.4, anchor=CENTER)
 	text_weather4_1.configure(text= "WEATHER CONDITIONS")
 
-	text_weather4_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_weather4_2.pack(anchor = "w", padx = 50)
-	text_weather4_2.place(relx=0.75, rely=0.49, anchor=CENTER)
-	wrap_weather4 = textwrap.fill(data_from_xml[3][1], 58)
-	text_weather4_2.configure(text= wrap_weather4)
+	text_weather4 = Tkinter.Label(win, text="", font=("Helvetica", 10), bg = 'black', fg = 'white')
+	text_weather4.pack(anchor = "w", padx = 50)
+	text_weather4.place(relx=0.73, rely=0.43, anchor=CENTER)
+	text_weather4.configure(text= data_from_xml[3][3])
 
-	text_lenstype3_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
-	text_lenstype3_1.pack(anchor = "w", padx = 50)
-	text_lenstype3_1.place(relx=0.75, rely=0.6, anchor=CENTER)
-	text_lenstype3_1.configure(text= "LENS TYPE:")
+	text_lenstype4_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
+	text_lenstype4_1.pack(anchor = "w", padx = 50)
+	text_lenstype4_1.place(relx=0.75, rely=0.5, anchor=CENTER)
+	text_lenstype4_1.configure(text= "LENS TYPE:")
 
-	text_lenstype4_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_lenstype4_2.pack(anchor = "w", padx = 50)
-	text_lenstype4_2.place(relx=0.75, rely=0.7, anchor=CENTER)
-	wrap_lenstype4 = textwrap.fill(data_from_xml[2][1], 4)
-	text_lenstype4_2.configure(text= wrap_lenstype3)
+	text_lenstype4 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_lenstype4.pack(anchor = "w", padx = 50)
+	text_lenstype4.place(relx=0.75, rely=0.53, anchor=CENTER)
+	text_lenstype4.configure(text= data_from_xml[2][3])
 
-	text_nadir4 = Tkinter.Label(win, text="", font=("Helvetica", 15))
+	text_nadir4_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
+	text_nadir4_1.pack(anchor = "w", padx = 50)
+	text_nadir4_1.place(relx=0.75, rely=0.6, anchor=CENTER)
+	text_nadir4_1.configure(text= "IS THE ISS DIRECTLY OVER TARGET: \n if YES, 1 if NO, 0")
+
+	text_nadir4 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
 	text_nadir4.pack(anchor = "w", padx = 50)
-	text_nadir4.place(relx=0.75, rely=0.8, anchor=CENTER)
-	text_nadir4.configure(text=data_from_xml[4][1])
+	text_nadir4.place(relx=0.75, rely=0.65, anchor=CENTER)
+	text_nadir4.configure(text=data_from_xml[4][3])
 
 #create a target information window for fifth location
 def newpage5():
 	win=Toplevel()
 	message = "Target Information"
-	Label(win, text=message).pack()
-	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15))
+	Label(win, text=message, bg = 'black', fg = 'white').pack()
+	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15), bg = 'white')
 	close.pack()
-	close.place(x=450,y=650)
+	close.place(relx=0.5, rely=0.7, anchor=CENTER)
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
-
-#map for fifth target location 
-	toopen = get_static_google_map("image2", center=data_from_xml[6][4]+","+data_from_xml[7][4], zoom=8, imgsize=(500,500), imgformat="gif", maptype="satellite")
+	win.configure(bg='black')
+#map for first target location 
+	toopen = get_static_google_map("image2", center=data_from_xml[6][4]+","+data_from_xml[7][4], zoom=8, imgsize=(400,400), imgformat="gif", maptype="satellite")
 	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 	# pick an image file you have .bmp  .jpg  .gif.  .png
@@ -458,74 +481,78 @@ def newpage5():
 	imagebox = Tkinter.Label(win, image=imgtoprint)
 	imagebox.image = imgtoprint
 	imagebox.pack()
+	imagebox.place(relx=0.25, rely=0.38, anchor=CENTER)
 
-#key info for fifth target location
-	text_locationname5 = Tkinter.Label(win, text="", font=("Helvetica", 25))
+
+#key information for first target location
+	text_locationname5 = Tkinter.Label(win, text="", font=("Helvetica", 25), bg = 'black', fg = 'white')
 	text_locationname5.pack(anchor = "w", padx = 50)
-	text_locationname5.place(relx=0.5, rely=0.06, anchor=CENTER)
-	text_locationname5.configure(text=data_from_xml[0][1])
+	text_locationname5.place(relx=0.5, rely=0.05, anchor=CENTER)
+	text_locationname5.configure(text=data_from_xml[0][4])
 
-	text_passingtime5_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_passingtime5_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_passingtime5_1.pack(anchor = "w", padx = 50)
 	text_passingtime5_1.place(relx=0.75, rely=0.2, anchor=CENTER)
 	text_passingtime5_1.configure(text= "TIME OF NEXT PASS:")
 
-	text_passingtime5_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_passingtime5_2.pack(anchor = "w", padx = 50)
-	text_passingtime5_2.place(relx=0.75, rely=0.24, anchor=CENTER)
-	text_passingtime5_2.configure(text= data_from_xml[1][1])
+	text_passingtime5 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_passingtime5.pack(anchor = "w", padx = 50)
+	text_passingtime5.place(relx=0.75, rely=0.23, anchor=CENTER)
+	text_passingtime5.configure(text = data_from_xml[1][4])
 
-	text_longlat5_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_longlat5_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_longlat5_1.pack(anchor = "w", padx = 50)
 	text_longlat5_1.place(relx=0.75, rely=0.3, anchor=CENTER)
 	text_longlat5_1.configure(text= "LOCATION OF TARGET:")
 
-	text_longlat5_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_longlat5_2.pack(anchor = "w", padx = 50)
-	text_longlat5_2.place(relx=0.75, rely=0.37, anchor=CENTER)
-	wrap_longlat5 = textwrap.fill(data_from_xml[5][1], 11)
-	text_longlat5_2.configure(text= wrap_longlat5)
+	text_longlat5 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_longlat5.pack(anchor = "w", padx = 50)
+	text_longlat5.place(relx=0.75, rely=0.33, anchor=CENTER)
+	text_longlat5.configure(text= data_from_xml[5][4])
 
-	text_weather5_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_weather5_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_weather5_1.pack(anchor = "w", padx = 50)
-	text_weather5_1.place(relx=0.75, rely=0.43, anchor=CENTER)
+	text_weather5_1.place(relx=0.75, rely=0.4, anchor=CENTER)
 	text_weather5_1.configure(text= "WEATHER CONDITIONS")
 
-	text_weather5_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_weather5_2.pack(anchor = "w", padx = 50)
-	text_weather5_2.place(relx=0.75, rely=0.49, anchor=CENTER)
-	wrap_weather5 = textwrap.fill(data_from_xml[3][1], 58)
-	text_weather5_2.configure(text= wrap_weather5)
+	text_weather5 = Tkinter.Label(win, text="", font=("Helvetica", 10), bg = 'black', fg = 'white')
+	text_weather5.pack(anchor = "w", padx = 50)
+	text_weather5.place(relx=0.73, rely=0.43, anchor=CENTER)
+	text_weather5.configure(text= data_from_xml[3][4])
 
-	text_lenstype5_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_lenstype5_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_lenstype5_1.pack(anchor = "w", padx = 50)
-	text_lenstype5_1.place(relx=0.75, rely=0.6, anchor=CENTER)
+	text_lenstype5_1.place(relx=0.75, rely=0.5, anchor=CENTER)
 	text_lenstype5_1.configure(text= "LENS TYPE:")
 
-	text_lenstype5_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_lenstype5_2.pack(anchor = "w", padx = 50)
-	text_lenstype5_2.place(relx=0.75, rely=0.7, anchor=CENTER)
-	wrap_lenstype5 = textwrap.fill(data_from_xml[2][1], 4)
-	text_lenstype5_2.configure(text= wrap_lenstype5)
+	text_lenstype5 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_lenstype5.pack(anchor = "w", padx = 50)
+	text_lenstype5.place(relx=0.75, rely=0.53, anchor=CENTER)
+	text_lenstype5.configure(text= data_from_xml[2][4])
 
-	text_nadir5 = Tkinter.Label(win, text="", font=("Helvetica", 15))
+	text_nadir5_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
+	text_nadir5_1.pack(anchor = "w", padx = 50)
+	text_nadir5_1.place(relx=0.75, rely=0.6, anchor=CENTER)
+	text_nadir5_1.configure(text= "IS THE ISS DIRECTLY OVER TARGET: \n if YES, 1 if NO, 0")
+
+	text_nadir5 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
 	text_nadir5.pack(anchor = "w", padx = 50)
-	text_nadir5.place(relx=0.75, rely=0.8, anchor=CENTER)
-	text_nadir5.configure(text=data_from_xml[4][1])
+	text_nadir5.place(relx=0.75, rely=0.65, anchor=CENTER)
+	text_nadir5.configure(text=data_from_xml[4][4])
 
 #create a target information window for sixth location
 def newpage6():
 	win=Toplevel()
 	message = "Target Information"
-	Label(win, text=message).pack()
-	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15))
+	Label(win, text=message, bg = 'black', fg = 'white').pack()
+	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15), bg = 'white')
 	close.pack()
-	close.place(x=450,y=650)
+	close.place(relx=0.5, rely=0.7, anchor=CENTER)
 	win.wm_title("SpaceMass")
 	win.geometry("1000x1000")
-
-#map for sixth target location 
-	toopen = get_static_google_map("image2", center=data_from_xml[6][5]+","+data_from_xml[7][5], zoom=8, imgsize=(500,500), imgformat="gif", maptype="satellite")
+	win.configure(bg='black')
+#map for first target location 
+	toopen = get_static_google_map("image2", center=data_from_xml[6][5]+","+data_from_xml[7][5], zoom=8, imgsize=(400,400), imgformat="gif", maptype="satellite")
 	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 	# pick an image file you have .bmp  .jpg  .gif.  .png
@@ -539,60 +566,64 @@ def newpage6():
 	imagebox = Tkinter.Label(win, image=imgtoprint)
 	imagebox.image = imgtoprint
 	imagebox.pack()
+	imagebox.place(relx=0.25, rely=0.38, anchor=CENTER)
 
-#key info for sixth target location
-	text_locationname6 = Tkinter.Label(win, text="", font=("Helvetica", 25))
+
+#key information for first target location
+	text_locationname6 = Tkinter.Label(win, text="", font=("Helvetica", 25), bg = 'black', fg = 'white')
 	text_locationname6.pack(anchor = "w", padx = 50)
-	text_locationname6.place(relx=0.5, rely=0.06, anchor=CENTER)
-	text_locationname6.configure(text=data_from_xml[0][1])
+	text_locationname6.place(relx=0.5, rely=0.05, anchor=CENTER)
+	text_locationname6.configure(text=data_from_xml[0][5])
 
-	text_passingtime6_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_passingtime6_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_passingtime6_1.pack(anchor = "w", padx = 50)
 	text_passingtime6_1.place(relx=0.75, rely=0.2, anchor=CENTER)
 	text_passingtime6_1.configure(text= "TIME OF NEXT PASS:")
 
-	text_passingtime6_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_passingtime6_2.pack(anchor = "w", padx = 50)
-	text_passingtime6_2.place(relx=0.75, rely=0.24, anchor=CENTER)
-	text_passingtime6_2.configure(text= data_from_xml[1][1])
+	text_passingtime6 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_passingtime6.pack(anchor = "w", padx = 50)
+	text_passingtime6.place(relx=0.75, rely=0.23, anchor=CENTER)
+	text_passingtime6.configure(text = data_from_xml[1][5])
 
-	text_longlat6_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_longlat6_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_longlat6_1.pack(anchor = "w", padx = 50)
 	text_longlat6_1.place(relx=0.75, rely=0.3, anchor=CENTER)
 	text_longlat6_1.configure(text= "LOCATION OF TARGET:")
 
-	text_longlat6_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_longlat6_2.pack(anchor = "w", padx = 50)
-	text_longlat6_2.place(relx=0.75, rely=0.37, anchor=CENTER)
-	wrap_longlat6 = textwrap.fill(data_from_xml[5][1], 11)
-	text_longlat6_2.configure(text= wrap_longlat6)
+	text_longlat6 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_longlat6.pack(anchor = "w", padx = 50)
+	text_longlat6.place(relx=0.75, rely=0.33, anchor=CENTER)
+	text_longlat6.configure(text= data_from_xml[5][5])
 
-	text_weather6_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_weather6_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_weather6_1.pack(anchor = "w", padx = 50)
-	text_weather6_1.place(relx=0.75, rely=0.43, anchor=CENTER)
+	text_weather6_1.place(relx=0.75, rely=0.4, anchor=CENTER)
 	text_weather6_1.configure(text= "WEATHER CONDITIONS")
 
-	text_weather6_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_weather6_2.pack(anchor = "w", padx = 50)
-	text_weather6_2.place(relx=0.75, rely=0.49, anchor=CENTER)
-	wrap_weather6 = textwrap.fill(data_from_xml[3][1], 58)
-	text_weather6_2.configure(text= wrap_weather6)
+	text_weather6 = Tkinter.Label(win, text="", font=("Helvetica", 10), bg = 'black', fg = 'white')
+	text_weather6.pack(anchor = "w", padx = 50)
+	text_weather6.place(relx=0.73, rely=0.43, anchor=CENTER)
+	text_weather6.configure(text= data_from_xml[3][5])
 
-	text_lenstype6_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"))
+	text_lenstype6_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_lenstype6_1.pack(anchor = "w", padx = 50)
-	text_lenstype6_1.place(relx=0.75, rely=0.6, anchor=CENTER)
+	text_lenstype6_1.place(relx=0.75, rely=0.5, anchor=CENTER)
 	text_lenstype6_1.configure(text= "LENS TYPE:")
 
-	text_lenstype6_2 = Tkinter.Label(win, text="", font=("Helvetica", 15))
-	text_lenstype6_2.pack(anchor = "w", padx = 50)
-	text_lenstype6_2.place(relx=0.75, rely=0.7, anchor=CENTER)
-	wrap_lenstype6 = textwrap.fill(data_from_xml[2][1], 4)
-	text_lenstype6_2.configure(text= wrap_lenstype6)
+	text_lenstype6 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_lenstype6.pack(anchor = "w", padx = 50)
+	text_lenstype6.place(relx=0.75, rely=0.53, anchor=CENTER)
+	text_lenstype6.configure(text= data_from_xml[2][5])
 
-	text_nadir6 = Tkinter.Label(win, text="", font=("Helvetica", 15))
+	text_nadir6_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
+	text_nadir6_1.pack(anchor = "w", padx = 50)
+	text_nadir6_1.place(relx=0.75, rely=0.6, anchor=CENTER)
+	text_nadir6_1.configure(text= "IS THE ISS DIRECTLY OVER TARGET: \n if YES, 1 if NO, 0")
+
+	text_nadir6 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
 	text_nadir6.pack(anchor = "w", padx = 50)
-	text_nadir6.place(relx=0.75, rely=0.8, anchor=CENTER)
-	text_nadir6.configure(text=data_from_xml[4][1])
+	text_nadir6.place(relx=0.75, rely=0.65, anchor=CENTER)
+	text_nadir6.configure(text=data_from_xml[4][5])
 
 #Make a global variable that will hold the list of markers we want to put on the map
 #credit to http://hci574.blogspot.com/2010/04/using-google-maps-static-images.html
@@ -833,9 +864,7 @@ def fileread():
 		riseazimuth.append(timingdata[1])
 		settime.append(timingdata[2])
 		#setazimuth(timingdata[3])
-		print(timingdata)
-		print(lat_storage)
-		print(long_storage)
+		
 
 
 	data_from_xml.append(locations_list)
@@ -850,16 +879,8 @@ def fileread():
 	data_from_xml.append(riseazimuth)
 	data_from_xml.append(settime)
 	data_from_xml.append(setazimuth)
-	print(targetlat)
-	print(targetlong)
-	print(timingdata)
-	#print(notes)
-	#print(Lens)
-	#print(weather)
-	#print(nadir_true_false)
-	#print(targetlong)
-	#print(targetlat)
-	#print(data_from_xml[0][1])
+	
+
 
 
 	#creating the buttons for each one of the locations, each button brings up a new page with target info
@@ -870,28 +891,28 @@ def fileread():
 	global text_position5
 	global text_position6
 
-	text_position1 = Button(window, text="", font=("Helvetica", 15), command=newpage1)
+	text_position1 = Button(window, text="", font=("Helvetica", 14), command=newpage1)
 	text_position1.pack(anchor = "w", padx = 50)
-	text_position1.place(x=50,y=350)
-	text_position2 = Button(window, text="", font=("Helvetica", 15), command=newpage2)
+	text_position1.place(relx=0.8,rely=0.34, anchor=CENTER)
+	text_position2 = Button(window, text="", font=("Helvetica", 14), command=newpage2)
 	text_position2.pack(anchor = "w", padx = 50)
-	text_position2.place(x=50,y=400)
-	text_position3 = Button(window, text="", font=("Helvetica", 15), command=newpage3)
+	text_position2.place(relx=0.8,rely=0.415, anchor=CENTER)
+	text_position3 = Button(window, text="", font=("Helvetica", 14), command=newpage3)
 	text_position3.pack(anchor = "w", padx = 50)
-	text_position3.place(x=50,y=450)
-	text_position4 = Button(window, text="", font=("Helvetica", 15), command=newpage4)
+	text_position3.place(relx=0.8,rely=0.49, anchor=CENTER)
+	text_position4 = Button(window, text="", font=("Helvetica", 14), command=newpage4)
 	text_position4.pack(anchor = "w", padx = 50)
-	text_position4.place(x=50,y=500)
-	text_position5 = Button(window, text="", font=("Helvetica", 15), command=newpage5)
+	text_position4.place(relx=0.8,rely=0.565, anchor=CENTER)
+	text_position5 = Button(window, text="", font=("Helvetica", 14), command=newpage5)
 	text_position5.pack(anchor = "w", padx = 50)
-	text_position5.place(x=50,y=550)
-	text_position6 = Button(window, text="", font=("Helvetica", 15), command=newpage6)
+	text_position5.place(relx=0.8,rely=0.64, anchor=CENTER)
+	text_position6 = Button(window, text="", font=("Helvetica", 14), command=newpage6)
 	text_position6.pack(anchor = "w", padx = 50)
-	text_position6.place(x=50,y=600)
+	text_position6.place(relx=0.8,rely=0.715, anchor=CENTER)
 
-	text_todaystargets = Tkinter.Label(window, text="Today's Targets", font=("Helvetica", 15), bg='light blue')
+	text_todaystargets = Tkinter.Label(window, text="Today's Targets and Time Until Next Pass", font=("Helvetica", 15), bg='black', fg = 'white')
 	text_todaystargets.pack(anchor = "w", padx = 50)
-	text_todaystargets.place(x=50,y=300)
+	text_todaystargets.place(relx=0.8,rely=0.265, anchor=CENTER)
 
 	text_position1.configure(text=data_from_xml[0][0])
 	text_position2.configure(text=data_from_xml[0][1])
@@ -921,8 +942,7 @@ currentlong = iss.sublong
 currentlat = iss.sublat 
 currentlongfloat= float(iss.sublong)
 currentlatfloat= float(iss.sublat)
-#convert radians to degrees with the equations 1 radian = 57.2957795 degrees
-#TODO Learn how to use pi in python 
+#convert radians to degrees with the equations 1 radian = 57.2957795 degree#TODO Learn how to use pi in python 
 currentlongfloat = round(currentlongfloat*57.2957795, 3)
 currentlatfloat= round(currentlatfloat*57.2957795, 3)
 if futureonoff == True:
@@ -936,7 +956,6 @@ toopen = get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1,
 #im = PIL.Image.open("mymap2.png")
 #imageFile = "mymap2.png"
 #Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
-#print(toopen)
 u = urllib.urlopen(toopen)
 raw_data = u.read()
 u.close()
