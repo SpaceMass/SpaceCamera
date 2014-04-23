@@ -656,12 +656,37 @@ def positionupdater():
 	#TODO split the clock thread and the map thread. We need to slow down the clock to get the google API to work, but now the clock counts slow
 	window.after(1000, positionupdater)
 def buttonclock():
-	text_position1.configure(text=data_from_xml[0][0] + " in " + nextpass.get(data_from_xml[6][0],data_from_xml[7][0],iss))
-	text_position2.configure(text=data_from_xml[0][1] + " in " + nextpass.get(data_from_xml[6][1],data_from_xml[7][1],iss))
-	text_position3.configure(text=data_from_xml[0][2] + " in " + nextpass.get(data_from_xml[6][2],data_from_xml[7][2],iss))
-	text_position4.configure(text=data_from_xml[0][3] + " in " + nextpass.get(data_from_xml[6][3],data_from_xml[7][3],iss))
-	text_position5.configure(text=data_from_xml[0][4] + " in " + nextpass.get(data_from_xml[6][4],data_from_xml[7][4],iss))
-	text_position6.configure(text=data_from_xml[0][5] + " in " + nextpass.get(data_from_xml[6][5],data_from_xml[7][5],iss))
+	try: 
+		if data_from_xml[0][0] != "None": 
+			text_position1.configure(text=data_from_xml[0][0] + " in " + nextpass.get(data_from_xml[6][0],data_from_xml[7][0],iss))
+		else:
+			text_position1.configure(text = "None", command = None)
+		if data_from_xml[0][1] != "None":
+			text_position2.configure(text=data_from_xml[0][1] + " in " + nextpass.get(data_from_xml[6][1],data_from_xml[7][1],iss))
+		else:
+			text_position2.configure(text = "None", command = None)
+		if data_from_xml[0][2] != "None":
+			text_position3.configure(text=data_from_xml[0][2] + " in " + nextpass.get(data_from_xml[6][2],data_from_xml[7][2],iss))
+		else:
+			text_position3.configure(text = "None", command = None)
+		if data_from_xml[0][3] != "None":
+			text_position4.configure(text=data_from_xml[0][3] + " in " + nextpass.get(data_from_xml[6][3],data_from_xml[7][3],iss))
+		else:
+			text_position4.configure(text = "None", command = None)
+		if data_from_xml[0][4] != "None": 
+			text_position5.configure(text=data_from_xml[0][4] + " in " + nextpass.get(data_from_xml[6][4],data_from_xml[7][4],iss))
+		else:
+			text_position5.configure(text = "None", command = None)
+		if data_from_xml[0][5] != "None":
+			text_position6.configure(text=data_from_xml[0][5] + " in " + nextpass.get(data_from_xml[6][5],data_from_xml[7][5],iss))
+		else:
+			text_position6.configure(text = "None", command = None)
+	except TclError:
+		text_todaystargets.destroy()
+		c = Button(window, text="Toggle Orbit Prediction on Map", font=("Helvetica", 15), command=togglemap, bg = 'white')
+		c.pack()
+		c.place(relx=0.5,rely=0.97, anchor=CENTER)
+
 	window.after(1000, buttonclock)
 
 #updating map based on ISS location
@@ -680,7 +705,7 @@ def mapupdater():
 	currentlatfloat= round(currentlatfloat*57.2957795, 3)
 	#print(currentlongfloat)
 	#print(currentlatfloat)
-	timetoadd=5
+	timetoadd=0
 	timenow = datetime.datetime.utcnow()
 	iss.compute(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
 	long_list_3_orbits = []
@@ -692,12 +717,14 @@ def mapupdater():
 		long_list_3_orbits.append(round(float(iss.sublong)*57.2957795,3))
 		lat_list_3_orbits.append(round(float(iss.sublat)*57.2957795,3))
 		timetoadd = timetoadd + 5
+	marker_list.append("markers=size:mid|label:S|color:red|"+str(currentlatfloat)+","+str(currentlongfloat))
 	if futureonoff == True:
 		futureintermenter = 0
-		while futureintermenter < len(long_list_3_orbits):
-			marker_list.append("markers=size:mid|label:F|color:blue|"+str(lat_list_3_orbits[futureintermenter])+","+str(long_list_3_orbits[futureintermenter])+"|")
+		while futureintermenter < len(long_list_3_orbits)-1:
+			marker_list.append("&path=color:0xff0000ff|weight:5")
+			marker_list.append("|"+str(lat_list_3_orbits[futureintermenter])+","+str(long_list_3_orbits[futureintermenter]))
+			marker_list.append("|"+str(lat_list_3_orbits[futureintermenter+1])+","+str(long_list_3_orbits[futureintermenter+1]))
 			futureintermenter = futureintermenter + 1
-	marker_list.append("markers=size:mid|label:S|color:red|"+str(currentlatfloat)+","+str(currentlongfloat)+"|")
 	toopenupdater = get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1, imgsize=(500,500), imgformat="gif", maptype="satellite", markers=marker_list)
 	#print(toopenupdater)
 	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
@@ -759,8 +786,7 @@ def get_static_google_map(filename_wo_extension, center=None, zoom=None, imgsize
 
     # add markers (location and style)
     if markers != None:
-        for marker in markers:
-                request += "%s&" % marker
+                request += "%s&" % ''.join(markers)
 
 
     #request += "mobile=false&"  # optional: mobile=true will assume the image is shown on a small screen (mobile device)
@@ -801,6 +827,13 @@ def fileread():
 		location_storeage = elem.get('Nomenclature')
 		locations.append(location_storeage)
 		locations_list.append(location_storeage)
+	loadincoment = len(locations_list) 
+	print loadincoment
+	while loadincoment <= 5:
+		locations.append("None")
+		locations_list.append("None")
+		loadincoment = loadincoment + 1
+	print locations_list
 	#print(locations)
 	#print(locations_list)
 
@@ -905,6 +938,7 @@ def fileread():
 	global text_position4
 	global text_position5
 	global text_position6
+	global text_todaystargets
 
 	text_position1 = Button(window, text="", font=("Helvetica", 14), command=newpage1)
 	text_position1.pack(anchor = "w", padx = 50)
@@ -935,9 +969,28 @@ def fileread():
 	text_position4.configure(text=data_from_xml[0][3])
 	text_position5.configure(text=data_from_xml[0][4])
 	text_position6.configure(text=data_from_xml[0][5])
+	b.destroy()
+	global c
+	c = Button(window, text="Unload XML File", font=("Helvetica", 15), command=unload, bg = 'white')
+	c.pack()
+	c.place(relx=0.5,rely=0.9, anchor=CENTER)
 	buttonclock()
 
 	#text_file.configure(text=testing)
+def unload():
+	global c
+	c.destroy()
+	text_todaystargets.destroy()
+	text_position1.destroy()
+	text_position2.destroy()
+	text_position3.destroy()
+	text_position4.destroy()
+	text_position5.destroy()
+	text_position6.destroy()
+	global b
+	b = Button(window, text="Browse for XML File", font=("Helvetica", 15), command=fileback, bg = 'white')
+	b.pack()
+	b.place(relx=0.5,rely=0.9, anchor=CENTER)
 #Info about buttons http://effbot.org/tkinterbook/button.htm
 #Parsing code from http://stackoverflow.com/questions/773797/updating-tkinter-labels-in-python
 #settings for font, font size, pixel size, of the text in our GUI
@@ -980,9 +1033,11 @@ imgtoprint = Tkinter.PhotoImage(data=b64_data)
 panel1 = Tkinter.Label(window, image=imgtoprint, bg='black', width = 500, height = 400)
 panel1.pack(side='top', fill='both', expand='yes',anchor = "w", padx = 50)
 panel1.place(relx=0.3,rely=0.5, anchor=CENTER)
+global b
 b = Button(window, text="Browse for XML File", font=("Helvetica", 15), command=fileback, bg = 'white')
 b.pack()
 b.place(relx=0.5,rely=0.9, anchor=CENTER)
+global c
 c = Button(window, text="Toggle Orbit Prediction on Map", font=("Helvetica", 15), command=togglemap, bg = 'white')
 c.pack()
 c.place(relx=0.5,rely=0.97, anchor=CENTER)
