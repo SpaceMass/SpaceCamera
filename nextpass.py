@@ -32,3 +32,16 @@ def get(x,y,iss):
 	#Code from http://stackoverflow.com/questions/4048651/python-function-to-convert-seconds-into-minutes-hours-and-days
 	#print ("%d:%d:%d" % (d.hour, d.minute, d.second))
 	return returner
+#returns the full array for storage the the data from XML stuff
+def full(x,y,iss):
+	#Lat, long, iss
+	location = ephem.Observer()
+	location.lat = x
+	location.lon = y
+	location.elevation = 2198
+	timenow = datetime.utcnow()
+	#print timenow
+	location.date = timenow
+	#calculate where the ISS is
+	nextpassdata = location.next_pass(iss)
+	return nextpassdata
