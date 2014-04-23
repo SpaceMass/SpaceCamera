@@ -303,7 +303,7 @@ def newpage2():
 	text_nadir2_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_nadir2_1.pack(anchor = "w", padx = 50)
 	text_nadir2_1.place(relx=0.75, rely=0.6, anchor=CENTER)
-	text_nadi2r_1.configure(text= data_from_xml[12][1])
+	text_nadir2_1.configure(text= data_from_xml[12][1])
 
 	text_nadir2 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
 	text_nadir2.pack(anchor = "w", padx = 50)
@@ -397,7 +397,7 @@ def newpage3():
 	text_lenstype3.place(relx=0.75, rely=0.53, anchor=CENTER)
 	text_lenstype3.configure(text= data_from_xml[2][2])
 
-	text_nadi3_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
+	text_nadir3_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_nadir3_1.pack(anchor = "w", padx = 50)
 	text_nadir3_1.place(relx=0.75, rely=0.6, anchor=CENTER)
 	text_nadir3_1.configure(text= data_from_xml[12][2])
