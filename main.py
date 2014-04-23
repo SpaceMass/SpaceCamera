@@ -793,7 +793,7 @@ u.close()
 b64_data = base64.encodestring(raw_data)
 global imgtoprint
 imgtoprint = Tkinter.PhotoImage(data=b64_data)
-panel1 = Tkinter.Label(window, image=imgtoprint, bg='black')
+panel1 = Tkinter.Label(window, image=imgtoprint, bg='black', width = 500, height = 400)
 panel1.pack(side='top', fill='both', expand='yes',anchor = "w", padx = 50)
 panel1.place(relx=0.3,rely=0.5, anchor=CENTER)
 b = Button(window, text="Browse for XML File", font=("Helvetica", 15), command=fileback, bg = 'white')
