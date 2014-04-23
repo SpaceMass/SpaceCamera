@@ -47,10 +47,10 @@ global locations
 locations = []
 global notes
 notes =[]
-data = urllib2.urlopen("http://www.celestrak.com/NORAD/elements/stations.txt")
+#data = urllib2.urlopen("http://www.celestrak.com/NORAD/elements/stations.txt")
 stations_text_file = []
-for line in data:
-	stations_text_file.append(line)
+#for line in data:
+#	stations_text_file.append(line)
 global EOSites_store
 EOSites_store = []
 global currentlongfloat
@@ -65,9 +65,9 @@ futureonoff = True
 
 #Code modified from http://brainwagon.org/2009/09/27/how-to-use-python-to-predict-satellite-locations/
 #We need to extract the two line element for just the iss from http://www.celestrak.com/NORAD/elements/stations.txt
-iss = ephem.readtle(stations_text_file[0],
-	stations_text_file[1],
-	stations_text_file[2])
+iss = ephem.readtle('ISS',
+	'1 25544U 98067A   14097.76250877  .00016717  00000-0  10270-3 0  9000',
+	'2 25544  51.6480  88.5903 0002624 354.6196   5.4926 15.50582954   401')
 
 
 
@@ -490,7 +490,7 @@ def positionupdater():
 	#print(currentlatfloat)
 	#update the world map with the current location
 	text_currentposition.configure(text="The Iss's Current Position is \n" + "Long:" + str(currentlong) + "\n" + "Lat:" + str(currentlat) +"\n")
-	text_currentposition.place(x=400,y=50)
+	text_currentposition.place(relx=0.3,rely=0.2, anchor=CENTER)
 	text_clock.configure(text="Date: " + str(timenow) + "   Time: " + str(datenow))
 	#TODO split the clock thread and the map thread. We need to slow down the clock to get the google API to work, but now the clock counts slow
 	window.after(1000, positionupdater)
@@ -739,9 +739,9 @@ def fileread():
 	text_position6.pack(anchor = "w", padx = 50)
 	text_position6.place(x=50,y=600)
 
-	text_todaystargets = Tkinter.Label(window, text="Today's Targets", font=("Helvetica", 15), bg='light blue')
+	text_todaystargets = Tkinter.Label(window, text="Today's Targets", font=("Helvetica", 15), bg='black', fg='white')
 	text_todaystargets.pack(anchor = "w", padx = 50)
-	text_todaystargets.place(x=50,y=300)
+	text_todaystargets.place(relx=0.8,rely=0.25, anchor=CENTER)
 
 	text_position1.configure(text=data_from_xml[0][0])
 	text_position2.configure(text=data_from_xml[0][1])
@@ -759,11 +759,11 @@ timenow = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 iss.compute(timenow)
 currentlong = iss.sublong
 currentlat = iss.sublat
-text_currentposition = Tkinter.Label(window, text="", font=("Helvetica", 15), bg='light blue', fg='midnight blue')#clock
+text_currentposition = Tkinter.Label(window, text="", font=("Helvetica", 15), bg='black', fg='white')#clock
 text_currentposition.pack(anchor = "w", padx = 50)#clock
-text_clock = Tkinter.Label(window, text="", font=("Helvetica", 25), bg = 'midnight blue', fg= 'white')
+text_clock = Tkinter.Label(window, text="", font=("Helvetica", 25), bg = 'black', fg= 'white')
 text_clock.pack(anchor = "w", padx = 50)
-text_clock.place(x=300,y=10)
+text_clock.place(relx=0.5,rely=0.05, anchor=CENTER)
 marker_list = []
 timenowforcomputing = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 iss.compute(timenowforcomputing)
@@ -794,11 +794,11 @@ b64_data = base64.encodestring(raw_data)
 global imgtoprint
 imgtoprint = Tkinter.PhotoImage(data=b64_data)
 panel1 = Tkinter.Label(window, image=imgtoprint, bg='black')
-panel1.pack(side='top', fill='both', expand='yes')
-panel1.place(x=250, y=115)
-b = Button(window, text="Browse for XML File", font=("Helvetica", 15), command=fileback, bg = 'black')
+panel1.pack(side='top', fill='both', expand='yes',anchor = "w", padx = 50)
+panel1.place(relx=0.3,rely=0.5, anchor=CENTER)
+b = Button(window, text="Browse for XML File", font=("Helvetica", 15), command=fileback, bg = 'white')
 b.pack()
-b.place(x=425,y=650)
+b.place(relx=0.5,rely=0.9, anchor=CENTER)
 c = Button(window, text="Toggle Orbit Prediction on Map", font=("Helvetica", 15), command=togglemap, bg = 'black')
 c.pack()
 c.place(x=425,y=850)
