@@ -59,6 +59,10 @@ global currentlatfloat
 currentlatfloat = 0.001
 global futureonoff
 futureonoff = True
+global long_list_3_orbits
+long_list_3_orbits = []
+global lat_list_3_orbits
+lat_list_3_orbits = []
 #-----End Global Declarations-----#
 
 
@@ -92,10 +96,6 @@ center_window(1000, 775)
 timetoadd=5
 timenow = datetime.datetime.utcnow()
 iss.compute(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
-global long_list_3_orbits
-long_list_3_orbits = []
-global lat_list_3_orbits
-lat_list_3_orbits = []
 while timetoadd < 90*2:
 	#print(timenow + datetime.timedelta(0,timetoadd*60))
 	#print(timenow)
@@ -678,8 +678,20 @@ def mapupdater():
 	#TODO Learn how to use pi in python 
 	currentlongfloat = round(currentlongfloat*57.2957795, 3)
 	currentlatfloat= round(currentlatfloat*57.2957795, 3)
-	print(currentlongfloat)
-	print(currentlatfloat)
+	#print(currentlongfloat)
+	#print(currentlatfloat)
+	timetoadd=5
+	timenow = datetime.datetime.utcnow()
+	iss.compute(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+	long_list_3_orbits = []
+	lat_list_3_orbits = []
+	while timetoadd < 90*1.25:
+		#print(timenow + datetime.timedelta(0,timetoadd*60))
+		#print(timenow)
+		iss.compute(timenow + datetime.timedelta(0,timetoadd*60))
+		long_list_3_orbits.append(round(float(iss.sublong)*57.2957795,3))
+		lat_list_3_orbits.append(round(float(iss.sublat)*57.2957795,3))
+		timetoadd = timetoadd + 5
 	if futureonoff == True:
 		futureintermenter = 0
 		while futureintermenter < len(long_list_3_orbits):
@@ -693,19 +705,19 @@ def mapupdater():
 	uupdater = urllib.urlopen(toopenupdater)
 	raw_data_u = uupdater.read()
 	u.close()
-	b64_data_u = base64.encodestring(raw_data_u)
-	imgtoprint = Tkinter.PhotoImage(data=b64_data)
-
+	b64_data2 = base64.encodestring(raw_data_u)
+	imgtoprint2 = Tkinter.PhotoImage(data=b64_data2)
 	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
 	# pick an image file you have .bmp  .jpg  .gif.  .png
 	# load the file and covert it to a Tkinter image object
 	#imageFile = "mymap2.png"
 	#image1 = ImageTk.PhotoImage(Image.open(imageFile))
 	#image1.configure(file='mymap2.jpg')
-	panel1.configure(image = imgtoprint)
-	panel1.image = imgtoprint
+	panel1.configure(image = imgtoprint2)
+	panel1.image = imgtoprint2
 	#updata map after 30 seconds
 	window.after(30000, mapupdater)
+
 
 
 
@@ -837,7 +849,10 @@ def fileread():
 		if 'partly cloudy' in notes_storeage:
 		 	weather_string = weather_string + " Cloud conditions are partly cloudy"
 		weather.append(weather_string)
-		nadir_true_false.append('nadir' in notes_storeage)
+		nadirstring = "The target will not pass near nadir"
+		if 'nadir' in notes_storeage:
+			nadirstring = "The target will pass near nadir"
+			nadir_true_false.append(nadirstring)		
 		if 'left of track' in notes_storeage:
 			track.append('left of track')
 		if 'right of track' in notes_storeage:
@@ -968,9 +983,9 @@ panel1.place(relx=0.3,rely=0.5, anchor=CENTER)
 b = Button(window, text="Browse for XML File", font=("Helvetica", 15), command=fileback, bg = 'white')
 b.pack()
 b.place(relx=0.5,rely=0.9, anchor=CENTER)
-c = Button(window, text="Toggle Orbit Prediction on Map", font=("Helvetica", 15), command=togglemap, bg = 'black')
+c = Button(window, text="Toggle Orbit Prediction on Map", font=("Helvetica", 15), command=togglemap, bg = 'white')
 c.pack()
-c.place(x=425,y=850)
+c.place(relx=0.5,rely=0.97, anchor=CENTER)
 
 positionupdater()
 mapupdater()
