@@ -1,0 +1,41 @@
+def mapupdater():
+	global futureonoff
+	marker_list = []
+	timenowforcomputing = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+	iss.compute(timenowforcomputing)
+	currentlong = iss.sublong 
+	currentlat = iss.sublat 
+	currentlongfloat= float(iss.sublong)
+	currentlatfloat= float(iss.sublat)
+	#convert radians to degrees with the equations 1 radian = 57.2957795 degrees
+	#TODO Learn how to use pi in python 
+	currentlongfloat = round(currentlongfloat*57.2957795, 3)
+	currentlatfloat= round(currentlatfloat*57.2957795, 3)
+	print(currentlongfloat)
+	print(currentlatfloat)
+	if futureonoff == True:
+		futureintermenter = 0
+		while futureintermenter < len(long_list_3_orbits):
+			marker_list.append("markers=size:mid|label:F|color:blue|"+str(lat_list_3_orbits[futureintermenter])+","+str(long_list_3_orbits[futureintermenter])+"|")
+			futureintermenter = futureintermenter + 1
+	marker_list.append("markers=size:mid|label:S|color:red|"+str(currentlatfloat)+","+str(currentlongfloat)+"|")
+	toopenupdater = get_static_google_map("mymap2", center="42.950827,-122.108974", zoom=1, imgsize=(500,500), imgformat="gif", maptype="satellite", markers=marker_list)
+	#print(toopenupdater)
+	#Code from http://stackoverflow.com/questions/6086262/python-3-how-to-retrieve-an-image-from-the-web-and-display-in-a-gui-using-tkint
+	#im = PIL.Image.open("mymap2.png")
+	uupdater = urllib.urlopen(toopenupdater)
+	raw_data_u = uupdater.read()
+	u.close()
+	b64_data2 = base64.encodestring(raw_data_u)
+	imgtoprint2 = Tkinter.PhotoImage(data=b64_data2)
+
+	# from http://www.daniweb.com/software-development/python/threads/79337/putting-an-image-into-a-tkinter-thingy
+	# pick an image file you have .bmp  .jpg  .gif.  .png
+	# load the file and covert it to a Tkinter image object
+	#imageFile = "mymap2.png"
+	#image1 = ImageTk.PhotoImage(Image.open(imageFile))
+	#image1.configure(file='mymap2.jpg')
+	panel1.configure(image = imgtoprint2)
+	panel1.image = imgtoprint2
+	#updata map after 30 seconds
+	window.after(30000, mapupdater)
