@@ -649,6 +649,14 @@ def fileread():
 	targetlong = []
 	global data_from_xml
 	data_from_xml = []
+	global risetime
+	risetime = []
+	global riseazimuth
+	riseazimuth = []
+	global settime
+	settime = []
+	global setazimuth
+	setazimuth = []
 	for elem in base.findall('EOSites/wmc__TEOSite'):
 		weather_string = ''
 		#print elem.get('Notes', elem.text)
@@ -694,7 +702,7 @@ def fileread():
 		risetime.append(timingdata[0])
 		riseazimuth.append(timingdata[1])
 		settime.append(timingdata[2])
-		setazimuth(timingdata[3])
+		#setazimuth(timingdata[3])
 		print(timingdata)
 		print(lat_storage)
 		print(long_storage)
@@ -709,7 +717,9 @@ def fileread():
 	data_from_xml.append(targetlat)
 	data_from_xml.append(targetlong)
 	data_from_xml.append(risetime)
-	data_from_xml.append
+	data_from_xml.append(riseazimuth)
+	data_from_xml.append(settime)
+	data_from_xml.append(setazimuth)
 	print(targetlat)
 	print(targetlong)
 	print(timingdata)
