@@ -47,10 +47,10 @@ global locations
 locations = []
 global notes
 notes =[]
-#data = urllib2.urlopen("http://www.celestrak.com/NORAD/elements/stations.txt")
+data = urllib2.urlopen("http://www.celestrak.com/NORAD/elements/stations.txt")
 stations_text_file = []
-#for line in data:
-#	stations_text_file.append(line)
+for line in data:
+	stations_text_file.append(line)
 global EOSites_store
 EOSites_store = []
 global currentlongfloat
@@ -69,9 +69,9 @@ lat_list_3_orbits = []
 
 #Code modified from http://brainwagon.org/2009/09/27/how-to-use-python-to-predict-satellite-locations/
 #We need to extract the two line element for just the iss from http://www.celestrak.com/NORAD/elements/stations.txt
-iss = ephem.readtle('ISS',
-	'1 25544U 98067A   14097.76250877  .00016717  00000-0  10270-3 0  9000',
-	'2 25544  51.6480  88.5903 0002624 354.6196   5.4926 15.50582954   401')
+iss = ephem.readtle(stations_text_file[0],
+	stations_text_file[1],
+	stations_text_file[2])
 
 
 
@@ -147,12 +147,23 @@ def newpage1():
 	text_passingtime_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_passingtime_1.pack(anchor = "w", padx = 50)
 	text_passingtime_1.place(relx=0.75, rely=0.2, anchor=CENTER)
-	text_passingtime_1.configure(text= "TIME OF NEXT PASS:")
+	text_passingtime_1.configure(text= "START AND END OF NEXT PASS:")
 
 	text_passingtime = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
 	text_passingtime.pack(anchor = "w", padx = 50)
 	text_passingtime.place(relx=0.75, rely=0.23, anchor=CENTER)
-	text_passingtime.configure(text = data_from_xml[1][0])
+	fastconverthelper = data_from_xml[8][0]
+	fastconverthelper2 = fastconverthelper.datetime()
+	fastconvert = fastconverthelper2.strftime("%m/%d/%y %H:%M:%S")
+	text_passingtime.configure(text = "The next pass will begin at " + str(fastconvert) + " UTC")
+
+	text_endingtime = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_endingtime.pack(anchor = "w", padx = 50)
+	text_endingtime.place(relx=0.75, rely=0.26, anchor=CENTER)
+	fastconverthelper = data_from_xml[10][0]
+	fastconverthelper2 = fastconverthelper.datetime()
+	fastconvert = fastconverthelper2.strftime("%m/%d/%y %H:%M:%S")
+	text_endingtime.configure(text = "The next pass will end at " + str(fastconvert) + " UTC")
 
 	text_longlat_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_longlat_1.pack(anchor = "w", padx = 50)
@@ -162,7 +173,7 @@ def newpage1():
 	text_longlat = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
 	text_longlat.pack(anchor = "w", padx = 50)
 	text_longlat.place(relx=0.75, rely=0.33, anchor=CENTER)
-	text_longlat.configure(text= data_from_xml[5][0])
+	text_longlat.configure(text= "Lat:" + data_from_xml[6][0] + " Long:" + data_from_xml[7][0])
 
 	text_weather_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_weather_1.pack(anchor = "w", padx = 50)
@@ -187,7 +198,7 @@ def newpage1():
 	text_nadir_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_nadir_1.pack(anchor = "w", padx = 50)
 	text_nadir_1.place(relx=0.75, rely=0.6, anchor=CENTER)
-	text_nadir_1.configure(text= "IS THE ISS DIRECTLY OVER TARGET: \n if YES, 1 if NO, 0")
+	text_nadir_1.configure(text= data_from_xml[12][0])
 
 	text_nadir = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
 	text_nadir.pack(anchor = "w", padx = 50)
@@ -235,25 +246,36 @@ def newpage2():
 	text_locationname2.place(relx=0.5, rely=0.05, anchor=CENTER)
 	text_locationname2.configure(text=data_from_xml[0][1])
 
-	text_passingtime2_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
-	text_passingtime2_1.pack(anchor = "w", padx = 50)
-	text_passingtime2_1.place(relx=0.75, rely=0.2, anchor=CENTER)
-	text_passingtime2_1.configure(text= "TIME OF NEXT PASS:")
+	text_passingtime_2 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
+	text_passingtime_2.pack(anchor = "w", padx = 50)
+	text_passingtime_2.place(relx=0.75, rely=0.2, anchor=CENTER)
+	text_passingtime_2.configure(text= "START AND END OF NEXT PASS:")
 
 	text_passingtime2 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
 	text_passingtime2.pack(anchor = "w", padx = 50)
 	text_passingtime2.place(relx=0.75, rely=0.23, anchor=CENTER)
-	text_passingtime2.configure(text = data_from_xml[1][1])
+	fastconverthelper2 = data_from_xml[8][1]
+	fastconverthelper22 = fastconverthelper2.datetime()
+	fastconvert2 = fastconverthelper22.strftime("%m/%d/%y %H:%M:%S")
+	text_passingtime2.configure(text = "The next pass will begin at " + str(fastconvert2) + " UTC")
+
+	text_endingtime2 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_endingtime2.pack(anchor = "w", padx = 50)
+	text_endingtime2.place(relx=0.75, rely=0.26, anchor=CENTER)
+	fastconverthelper2 = data_from_xml[10][1]
+	fastconverthelper22 = fastconverthelper2.datetime()
+	fastconvert2 = fastconverthelper22.strftime("%m/%d/%y %H:%M:%S")
+	text_endingtime2.configure(text = "The next pass will end at " + str(fastconvert2) + " UTC")
 
 	text_longlat2_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_longlat2_1.pack(anchor = "w", padx = 50)
 	text_longlat2_1.place(relx=0.75, rely=0.3, anchor=CENTER)
 	text_longlat2_1.configure(text= "LOCATION OF TARGET:")
 
-	text_longlat2 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
-	text_longlat2.pack(anchor = "w", padx = 50)
-	text_longlat2.place(relx=0.75, rely=0.33, anchor=CENTER)
-	text_longlat2.configure(text= data_from_xml[5][1])
+	text_longlat = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_longlat.pack(anchor = "w", padx = 50)
+	text_longlat.place(relx=0.75, rely=0.33, anchor=CENTER)
+	text_longlat.configure(text= "Lat:" + data_from_xml[6][1] + " Long:" + data_from_xml[7][1])
 
 	text_weather2_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_weather2_1.pack(anchor = "w", padx = 50)
@@ -278,7 +300,7 @@ def newpage2():
 	text_nadir2_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_nadir2_1.pack(anchor = "w", padx = 50)
 	text_nadir2_1.place(relx=0.75, rely=0.6, anchor=CENTER)
-	text_nadi2r_1.configure(text= "IS THE ISS DIRECTLY OVER TARGET: \n if YES, 1 if NO, 0")
+	text_nadi2r_1.configure(text= data_from_xml[12][1])
 
 	text_nadir2 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
 	text_nadir2.pack(anchor = "w", padx = 50)
@@ -320,25 +342,37 @@ def newpage3():
 	text_locationname3.place(relx=0.5, rely=0.05, anchor=CENTER)
 	text_locationname3.configure(text=data_from_xml[0][2])
 
-	text_passingtime3_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
-	text_passingtime3_1.pack(anchor = "w", padx = 50)
-	text_passingtime3_1.place(relx=0.75, rely=0.2, anchor=CENTER)
-	text_passingtime3_1.configure(text= "TIME OF NEXT PASS:")
+	text_passingtime_3 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
+	text_passingtime_3.pack(anchor = "w", padx = 50)
+	text_passingtime_3.place(relx=0.75, rely=0.2, anchor=CENTER)
+	text_passingtime_3.configure(text= "START AND END OF NEXT PASS:")
 
-	text_passingtime3 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
-	text_passingtime3.pack(anchor = "w", padx = 50)
-	text_passingtime3.place(relx=0.75, rely=0.23, anchor=CENTER)
-	text_passingtime3.configure(text = data_from_xml[1][2])
+	text_passingtime = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_passingtime.pack(anchor = "w", padx = 50)
+	text_passingtime.place(relx=0.75, rely=0.23, anchor=CENTER)
+	fastconverthelper = data_from_xml[8][2]
+	fastconverthelper2 = fastconverthelper.datetime()
+	fastconvert = fastconverthelper2.strftime("%m/%d/%y %H:%M:%S")
+	text_passingtime.configure(text = "The next pass will begin at " + str(fastconvert) + " UTC")
+
+	text_endingtime = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_endingtime.pack(anchor = "w", padx = 50)
+	text_endingtime.place(relx=0.75, rely=0.26, anchor=CENTER)
+	fastconverthelper = data_from_xml[10][2]
+	fastconverthelper2 = fastconverthelper.datetime()
+	fastconvert = fastconverthelper2.strftime("%m/%d/%y %H:%M:%S")
+	text_endingtime.configure(text = "The next pass will end at " + str(fastconvert) + " UTC")
+
 
 	text_longlat3_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_longlat3_1.pack(anchor = "w", padx = 50)
 	text_longlat3_1.place(relx=0.75, rely=0.3, anchor=CENTER)
 	text_longlat3_1.configure(text= "LOCATION OF TARGET:")
 
-	text_longlat3 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
-	text_longlat3.pack(anchor = "w", padx = 50)
-	text_longlat3.place(relx=0.75, rely=0.33, anchor=CENTER)
-	text_longlat3.configure(text= data_from_xml[5][2])
+	text_longlat = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_longlat.pack(anchor = "w", padx = 50)
+	text_longlat.place(relx=0.75, rely=0.33, anchor=CENTER)
+	text_longlat.configure(text= "Lat:" + data_from_xml[6][2] + " Long:" + data_from_xml[7][2])
 
 	text_weather3_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_weather3_1.pack(anchor = "w", padx = 50)
@@ -363,7 +397,7 @@ def newpage3():
 	text_nadi3_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_nadir3_1.pack(anchor = "w", padx = 50)
 	text_nadir3_1.place(relx=0.75, rely=0.6, anchor=CENTER)
-	text_nadir3_1.configure(text= "IS THE ISS DIRECTLY OVER TARGET: \n if YES, 1 if NO, 0")
+	text_nadir3_1.configure(text= data_from_xml[12][2])
 
 	text_nadir3 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
 	text_nadir3.pack(anchor = "w", padx = 50)
@@ -405,25 +439,36 @@ def newpage4():
 	text_locationname4.place(relx=0.5, rely=0.05, anchor=CENTER)
 	text_locationname4.configure(text=data_from_xml[0][3])
 
-	text_passingtime4_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
-	text_passingtime4_1.pack(anchor = "w", padx = 50)
-	text_passingtime4_1.place(relx=0.75, rely=0.2, anchor=CENTER)
-	text_passingtime4_1.configure(text= "TIME OF NEXT PASS:")
+	text_passingtime_4 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
+	text_passingtime_4.pack(anchor = "w", padx = 50)
+	text_passingtime_4.place(relx=0.75, rely=0.2, anchor=CENTER)
+	text_passingtime_4.configure(text= "START AND END OF NEXT PASS:")
 
-	text_passingtime4 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
-	text_passingtime4.pack(anchor = "w", padx = 50)
-	text_passingtime4.place(relx=0.75, rely=0.23, anchor=CENTER)
-	text_passingtime4.configure(text = data_from_xml[1][3])
+	text_passingtime = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_passingtime.pack(anchor = "w", padx = 50)
+	text_passingtime.place(relx=0.75, rely=0.23, anchor=CENTER)
+	fastconverthelper = data_from_xml[8][3]
+	fastconverthelper2 = fastconverthelper.datetime()
+	fastconvert = fastconverthelper2.strftime("%m/%d/%y %H:%M:%S")
+	text_passingtime.configure(text = "The next pass will begin at " + str(fastconvert) + " UTC")
+
+	text_endingtime = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_endingtime.pack(anchor = "w", padx = 50)
+	text_endingtime.place(relx=0.75, rely=0.26, anchor=CENTER)
+	fastconverthelper = data_from_xml[10][3]
+	fastconverthelper2 = fastconverthelper.datetime()
+	fastconvert = fastconverthelper2.strftime("%m/%d/%y %H:%M:%S")
+	text_endingtime.configure(text = "The next pass will end at " + str(fastconvert) + " UTC")
 
 	text_longlat4_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_longlat4_1.pack(anchor = "w", padx = 50)
 	text_longlat4_1.place(relx=0.75, rely=0.3, anchor=CENTER)
 	text_longlat4_1.configure(text= "LOCATION OF TARGET:")
 
-	text_longlat4 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
-	text_longlat4.pack(anchor = "w", padx = 50)
-	text_longlat4.place(relx=0.75, rely=0.33, anchor=CENTER)
-	text_longlat4.configure(text= data_from_xml[5][3])
+	text_longlat = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_longlat.pack(anchor = "w", padx = 50)
+	text_longlat.place(relx=0.75, rely=0.33, anchor=CENTER)
+	text_longlat.configure(text= "Lat:" + data_from_xml[6][3] + " Long:" + data_from_xml[7][3])
 
 	text_weather4_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_weather4_1.pack(anchor = "w", padx = 50)
@@ -448,7 +493,7 @@ def newpage4():
 	text_nadir4_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_nadir4_1.pack(anchor = "w", padx = 50)
 	text_nadir4_1.place(relx=0.75, rely=0.6, anchor=CENTER)
-	text_nadir4_1.configure(text= "IS THE ISS DIRECTLY OVER TARGET: \n if YES, 1 if NO, 0")
+	text_nadir4_1.configure(text= data_from_xml[12][3])
 
 	text_nadir4 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
 	text_nadir4.pack(anchor = "w", padx = 50)
@@ -490,25 +535,36 @@ def newpage5():
 	text_locationname5.place(relx=0.5, rely=0.05, anchor=CENTER)
 	text_locationname5.configure(text=data_from_xml[0][4])
 
-	text_passingtime5_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
-	text_passingtime5_1.pack(anchor = "w", padx = 50)
-	text_passingtime5_1.place(relx=0.75, rely=0.2, anchor=CENTER)
-	text_passingtime5_1.configure(text= "TIME OF NEXT PASS:")
+	text_passingtime_5 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
+	text_passingtime_5.pack(anchor = "w", padx = 50)
+	text_passingtime_5.place(relx=0.75, rely=0.2, anchor=CENTER)
+	text_passingtime_5.configure(text= "START AND END OF NEXT PASS:")
 
-	text_passingtime5 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
-	text_passingtime5.pack(anchor = "w", padx = 50)
-	text_passingtime5.place(relx=0.75, rely=0.23, anchor=CENTER)
-	text_passingtime5.configure(text = data_from_xml[1][4])
+	text_passingtime = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_passingtime.pack(anchor = "w", padx = 50)
+	text_passingtime.place(relx=0.75, rely=0.23, anchor=CENTER)
+	fastconverthelper = data_from_xml[8][4]
+	fastconverthelper2 = fastconverthelper.datetime()
+	fastconvert = fastconverthelper2.strftime("%m/%d/%y %H:%M:%S")
+	text_passingtime.configure(text = "The next pass will begin at " + str(fastconvert) + " UTC")
+
+	text_endingtime = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_endingtime.pack(anchor = "w", padx = 50)
+	text_endingtime.place(relx=0.75, rely=0.26, anchor=CENTER)
+	fastconverthelper = data_from_xml[10][4]
+	fastconverthelper2 = fastconverthelper.datetime()
+	fastconvert = fastconverthelper2.strftime("%m/%d/%y %H:%M:%S")
+	text_endingtime.configure(text = "The next pass will end at " + str(fastconvert) + " UTC")
 
 	text_longlat5_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_longlat5_1.pack(anchor = "w", padx = 50)
 	text_longlat5_1.place(relx=0.75, rely=0.3, anchor=CENTER)
 	text_longlat5_1.configure(text= "LOCATION OF TARGET:")
 
-	text_longlat5 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
-	text_longlat5.pack(anchor = "w", padx = 50)
-	text_longlat5.place(relx=0.75, rely=0.33, anchor=CENTER)
-	text_longlat5.configure(text= data_from_xml[5][4])
+	text_longlat = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_longlat.pack(anchor = "w", padx = 50)
+	text_longlat.place(relx=0.75, rely=0.33, anchor=CENTER)
+	text_longlat.configure(text= "Lat:" + data_from_xml[6][4] + " Long:" + data_from_xml[7][4])
 
 	text_weather5_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_weather5_1.pack(anchor = "w", padx = 50)
@@ -533,7 +589,7 @@ def newpage5():
 	text_nadir5_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_nadir5_1.pack(anchor = "w", padx = 50)
 	text_nadir5_1.place(relx=0.75, rely=0.6, anchor=CENTER)
-	text_nadir5_1.configure(text= "IS THE ISS DIRECTLY OVER TARGET: \n if YES, 1 if NO, 0")
+	text_nadir5_1.configure(text= data_from_xml[12][4])
 
 	text_nadir5 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
 	text_nadir5.pack(anchor = "w", padx = 50)
@@ -575,25 +631,36 @@ def newpage6():
 	text_locationname6.place(relx=0.5, rely=0.05, anchor=CENTER)
 	text_locationname6.configure(text=data_from_xml[0][5])
 
-	text_passingtime6_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
-	text_passingtime6_1.pack(anchor = "w", padx = 50)
-	text_passingtime6_1.place(relx=0.75, rely=0.2, anchor=CENTER)
-	text_passingtime6_1.configure(text= "TIME OF NEXT PASS:")
+	text_passingtime_5 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
+	text_passingtime_5.pack(anchor = "w", padx = 50)
+	text_passingtime_5.place(relx=0.75, rely=0.2, anchor=CENTER)
+	text_passingtime_5.configure(text= "START AND END OF NEXT PASS:")
 
-	text_passingtime6 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
-	text_passingtime6.pack(anchor = "w", padx = 50)
-	text_passingtime6.place(relx=0.75, rely=0.23, anchor=CENTER)
-	text_passingtime6.configure(text = data_from_xml[1][5])
+	text_passingtime = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_passingtime.pack(anchor = "w", padx = 50)
+	text_passingtime.place(relx=0.75, rely=0.23, anchor=CENTER)
+	fastconverthelper = data_from_xml[8][4]
+	fastconverthelper2 = fastconverthelper.datetime()
+	fastconvert = fastconverthelper2.strftime("%m/%d/%y %H:%M:%S")
+	text_passingtime.configure(text = "The next pass will begin at " + str(fastconvert) + " UTC")
+
+	text_endingtime = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_endingtime.pack(anchor = "w", padx = 50)
+	text_endingtime.place(relx=0.75, rely=0.26, anchor=CENTER)
+	fastconverthelper = data_from_xml[10][4]
+	fastconverthelper2 = fastconverthelper.datetime()
+	fastconvert = fastconverthelper2.strftime("%m/%d/%y %H:%M:%S")
+	text_endingtime.configure(text = "The next pass will end at " + str(fastconvert) + " UTC")
 
 	text_longlat6_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_longlat6_1.pack(anchor = "w", padx = 50)
 	text_longlat6_1.place(relx=0.75, rely=0.3, anchor=CENTER)
 	text_longlat6_1.configure(text= "LOCATION OF TARGET:")
 
-	text_longlat6 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
-	text_longlat6.pack(anchor = "w", padx = 50)
-	text_longlat6.place(relx=0.75, rely=0.33, anchor=CENTER)
-	text_longlat6.configure(text= data_from_xml[5][5])
+	text_longlat = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
+	text_longlat.pack(anchor = "w", padx = 50)
+	text_longlat.place(relx=0.75, rely=0.33, anchor=CENTER)
+	text_longlat.configure(text= "Lat:" + data_from_xml[6][5] + " Long:" + data_from_xml[7][5])
 
 	text_weather6_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_weather6_1.pack(anchor = "w", padx = 50)
@@ -618,13 +685,29 @@ def newpage6():
 	text_nadir6_1 = Tkinter.Label(win, text="", font=("Helvetica", 15, "bold"), bg = 'black', fg = 'white')
 	text_nadir6_1.pack(anchor = "w", padx = 50)
 	text_nadir6_1.place(relx=0.75, rely=0.6, anchor=CENTER)
-	text_nadir6_1.configure(text= "IS THE ISS DIRECTLY OVER TARGET: \n if YES, 1 if NO, 0")
+	text_nadir6_1.configure(text= data_from_xml[12][5])
 
 	text_nadir6 = Tkinter.Label(win, text="", font=("Helvetica", 15), bg = 'black', fg = 'white')
 	text_nadir6.pack(anchor = "w", padx = 50)
 	text_nadir6.place(relx=0.75, rely=0.65, anchor=CENTER)
 	text_nadir6.configure(text=data_from_xml[4][5])
 
+def nullpage():
+	win=Toplevel()
+	message = ""
+	Label(win, text=message, bg = 'black', fg = 'white').pack()
+	close = Button(win,text='Close', command=win.destroy,font=("Helvetica", 15), bg = 'white')
+	close.pack()
+	close.place(relx=0.5, rely=0.7, anchor=CENTER)
+	win.wm_title("Target Information is Null")
+	win.geometry("1000x1000")
+	win.configure(bg='black')
+
+	#key information for first target location
+	text_locationnamenull = Tkinter.Label(win, text="We are sorry, no data was loaded for this button", font=("Helvetica", 25), bg = 'black', fg = 'white')
+	text_locationnamenull.pack(anchor = "w", padx = 50)
+	text_locationnamenull.place(relx=0.5, rely=0.05, anchor=CENTER)
+	
 #Make a global variable that will hold the list of markers we want to put on the map
 #credit to http://hci574.blogspot.com/2010/04/using-google-maps-static-images.html
 global marker_list
@@ -660,27 +743,40 @@ def buttonclock():
 		if data_from_xml[0][0] != "None": 
 			text_position1.configure(text=data_from_xml[0][0] + " in " + nextpass.get(data_from_xml[6][0],data_from_xml[7][0],iss))
 		else:
-			text_position1.configure(text = "None", command = None)
+			text_position1.configure(text = "None")
+			text_position1.configure(command = nullpage)
+			text_position1.grid_remove()
 		if data_from_xml[0][1] != "None":
 			text_position2.configure(text=data_from_xml[0][1] + " in " + nextpass.get(data_from_xml[6][1],data_from_xml[7][1],iss))
 		else:
-			text_position2.configure(text = "None", command = None)
+			text_position2.configure(text = "None")
+			text_position2.configure(command = nullpage)
+			text_position2.grid_remove()
+
 		if data_from_xml[0][2] != "None":
 			text_position3.configure(text=data_from_xml[0][2] + " in " + nextpass.get(data_from_xml[6][2],data_from_xml[7][2],iss))
 		else:
-			text_position3.configure(text = "None", command = None)
+			text_position3.configure(text = "None")
+			text_position3.configure(command = nullpage)
+			text_position3.grid_remove()
 		if data_from_xml[0][3] != "None":
 			text_position4.configure(text=data_from_xml[0][3] + " in " + nextpass.get(data_from_xml[6][3],data_from_xml[7][3],iss))
 		else:
-			text_position4.configure(text = "None", command = None)
+			text_position4.configure(text = "None")
+			text_position4.configure(command = nullpage)
+			text_position4.grid_remove()
 		if data_from_xml[0][4] != "None": 
 			text_position5.configure(text=data_from_xml[0][4] + " in " + nextpass.get(data_from_xml[6][4],data_from_xml[7][4],iss))
 		else:
-			text_position5.configure(text = "None", command = None)
+			text_position5.configure(text = "None")
+			text_position5.configure(command = nullpage)
+			text_position5.grid_remove()
 		if data_from_xml[0][5] != "None":
 			text_position6.configure(text=data_from_xml[0][5] + " in " + nextpass.get(data_from_xml[6][5],data_from_xml[7][5],iss))
 		else:
-			text_position6.configure(text = "None", command = None)
+			text_position6.configure(text = "None")
+			text_position6.configure(command = nullpage)
+			text_position6.grid_remove()
 	except TclError:
 		text_todaystargets.destroy()
 		c = Button(window, text="Toggle Orbit Prediction on Map", font=("Helvetica", 15), command=togglemap, bg = 'white')
@@ -863,8 +959,11 @@ def fileread():
 	settime = []
 	global setazimuth
 	setazimuth = []
+	global operationnotes
+	operationnotes = []
 	for elem in base.findall('EOSites/wmc__TEOSite'):
 		weather_string = ''
+		op_string = ''
 		#print elem.get('Notes', elem.text)
 		notes_storeage = elem.get('Notes')
 		#Find the location of the GMT information to split the string at that location
@@ -874,18 +973,37 @@ def fileread():
 		Lens_index = notes_storeage.index('Lens')
 		Lens.append(notes_storeage[Lens_index+10]+notes_storeage[Lens_index+11]+notes_storeage[Lens_index+12]+notes_storeage[Lens_index+13]+notes_storeage[Lens_index+14]+notes_storeage[Lens_index+15]+notes_storeage[Lens_index+16]+notes_storeage[Lens_index+17])
 		if 'early morning' in notes_storeage:
-			weather_string = weather_string + 'The pass will take place during Early Morning Local Time'
+			weather_string = weather_string + 'The pass will take place during early morning local time'
 		if 'mid-morning' in notes_storeage:
-		 	weather_string = weather_string + 'The pass will take place during Mid-morning local time'
+		 	weather_string = weather_string + 'The pass will take place during mid-morning local time'
+		if 'midday' in notes_storeage:
+		 	weather_string = weather_string + 'The pass will take place during mid-day local time'
+		if 'late morning' in notes_storeage:
+			weather_string = weather_string + 'The pass will take place during late morning local time'
+		if 'nighttime' in notes_storeage:
+			weather_string = weather_string + 'The pass will take place during night time local time'
 		if 'clear' in notes_storeage:
-		 	weather_string = weather_string + " Cloud conditions are clear"		
+		 	weather_string = weather_string + ", cloud conditions are clear."		
 		if 'partly cloudy' in notes_storeage:
-		 	weather_string = weather_string + " Cloud conditions are partly cloudy"
+		 	weather_string = weather_string + ", cloud conditions are partly cloudy."
+		if 'minimal cloud coverage forecasted' in notes_storeage:
+			weather_string = weather_string + ", minimal cloud coverage forecasted."
+		if 'window except for the Cupola' in notes_storeage:
+			op_string = op_string + "Do not use the Cupola"
+		if 'bogen arm' in notes_storeage:
+			op_string = op_string + "Set the camera up on a bogen arm in the Cupola"
+		if 'do not take imagery with a 400mm or greater' in notes_storeage:
+			op_string = op_string + "Do not take imagery with a 400mm or greater " + '\n' + "from the Cupola due to stratch panel"
+		if weather_string == '':
+			weather_string = "The program could not isolate weather data from XML file, please open and read XML file"
 		weather.append(weather_string)
+		operationnotes.append(op_string)
 		nadirstring = "The target will not pass near nadir"
 		if 'nadir' in notes_storeage:
 			nadirstring = "The target will pass near nadir"
-			nadir_true_false.append(nadirstring)		
+			nadir_true_false.append(nadirstring)
+		else:
+			nadir_true_false.append(nadirstring)	
 		if 'left of track' in notes_storeage:
 			track.append('left of track')
 		if 'right of track' in notes_storeage:
@@ -927,6 +1045,7 @@ def fileread():
 	data_from_xml.append(riseazimuth)
 	data_from_xml.append(settime)
 	data_from_xml.append(setazimuth)
+	data_from_xml.append(operationnotes)
 	
 
 
